@@ -1,0 +1,13 @@
+.env
+data/
+logs/
+__pycache__/
+*.pyc
+.pytest_cache/
+.venv/
+
+reports/
+
+# macOS
+.DS_Store
+__MACOSX/

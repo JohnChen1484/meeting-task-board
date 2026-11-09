@@ -1,0 +1,930 @@
+event: message
+data: {"type": "message_start", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "7f77debc-f878-499f-9246-18d7d154831a", "sequence_id": 1, "finish": true, "content": {"answer": null, "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": {"local_msg_id": "", "msg_id": "", "execute_id": "6443fa8f-d31f-4e09-b2ff-1ff2410b6b76"}, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 2, "finish": false, "content": {"answer": "```", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 3, "finish": false, "content": {"answer": "markdown", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 4, "finish": false, "content": {"answer": "\n", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 5, "finish": false, "content": {"answer": "##", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 6, "finish": false, "content": {"answer": " ", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 7, "finish": false, "content": {"answer": "会议", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 8, "finish": false, "content": {"answer": "纪要", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 9, "finish": false, "content": {"answer": "\n", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 10, "finish": false, "content": {"answer": "**", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 11, "finish": false, "content": {"answer": "会议", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 12, "finish": false, "content": {"answer": "主题", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 13, "finish": false, "content": {"answer": "：", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 14, "finish": false, "content": {"answer": "**", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 15, "finish": false, "content": {"answer": " ", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 16, "finish": false, "content": {"answer": "紫杉", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 17, "finish": false, "content": {"answer": "项目", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 18, "finish": false, "content": {"answer": "周", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 19, "finish": false, "content": {"answer": "会", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 20, "finish": false, "content": {"answer": "\n", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 21, "finish": false, "content": {"answer": "**", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 22, "finish": false, "content": {"answer": "会议", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 23, "finish": false, "content": {"answer": "时间", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 24, "finish": false, "content": {"answer": "：", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 25, "finish": false, "content": {"answer": "**", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 26, "finish": false, "content": {"answer": " ", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 27, "finish": false, "content": {"answer": "2", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 28, "finish": false, "content": {"answer": "0", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 29, "finish": false, "content": {"answer": "2", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 30, "finish": false, "content": {"answer": "6", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 31, "finish": false, "content": {"answer": "-", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 32, "finish": false, "content": {"answer": "1", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 33, "finish": false, "content": {"answer": "0", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 34, "finish": false, "content": {"answer": "-", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 35, "finish": false, "content": {"answer": "2", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 36, "finish": false, "content": {"answer": "9", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 37, "finish": false, "content": {"answer": "\n", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 38, "finish": false, "content": {"answer": "**", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 39, "finish": false, "content": {"answer": "参会", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 40, "finish": false, "content": {"answer": "人员", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 41, "finish": false, "content": {"answer": "：", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 42, "finish": false, "content": {"answer": "**", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 43, "finish": false, "content": {"answer": " ", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 44, "finish": false, "content": {"answer": "未", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 45, "finish": false, "content": {"answer": "明确", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 46, "finish": false, "content": {"answer": "\n\n", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 47, "finish": false, "content": {"answer": "###", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 48, "finish": false, "content": {"answer": " ", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 49, "finish": false, "content": {"answer": "核心", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 50, "finish": false, "content": {"answer": "决定", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 51, "finish": false, "content": {"answer": "\n", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 52, "finish": false, "content": {"answer": "1", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 53, "finish": false, "content": {"answer": ".", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 54, "finish": false, "content": {"answer": " ", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 55, "finish": false, "content": {"answer": "王一", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 56, "finish": false, "content": {"answer": "鸣", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 57, "finish": false, "content": {"answer": "需", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 58, "finish": false, "content": {"answer": "在", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 59, "finish": false, "content": {"answer": "明天", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 60, "finish": false, "content": {"answer": "前", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 61, "finish": false, "content": {"answer": "提交", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 62, "finish": false, "content": {"answer": "蓝鲸", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 63, "finish": false, "content": {"answer": "接口", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 64, "finish": false, "content": {"answer": "文档", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 65, "finish": false, "content": {"answer": "\n\n", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 66, "finish": false, "content": {"answer": "###", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 67, "finish": false, "content": {"answer": " ", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 68, "finish": false, "content": {"answer": "关键", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 69, "finish": false, "content": {"answer": "讨论", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 70, "finish": false, "content": {"answer": "要点", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 71, "finish": false, "content": {"answer": "\n", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 72, "finish": false, "content": {"answer": "-", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 73, "finish": false, "content": {"answer": " ", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 74, "finish": false, "content": {"answer": "本次", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 75, "finish": false, "content": {"answer": "会议", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 76, "finish": false, "content": {"answer": "明确", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 77, "finish": false, "content": {"answer": "了", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 78, "finish": false, "content": {"answer": "蓝鲸", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 79, "finish": false, "content": {"answer": "接口", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 80, "finish": false, "content": {"answer": "文档", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 81, "finish": false, "content": {"answer": "的", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 82, "finish": false, "content": {"answer": "提交", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 83, "finish": false, "content": {"answer": "责任", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 84, "finish": false, "content": {"answer": "人和", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 85, "finish": false, "content": {"answer": "时限", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 86, "finish": false, "content": {"answer": "要求", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 87, "finish": false, "content": {"answer": "\n", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 88, "finish": false, "content": {"answer": "```", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 89, "finish": false, "content": {"answer": "\n\n", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 90, "finish": false, "content": {"answer": "```", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 91, "finish": false, "content": {"answer": "markdown", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 92, "finish": false, "content": {"answer": "\n", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 93, "finish": false, "content": {"answer": "##", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 94, "finish": false, "content": {"answer": " ", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 95, "finish": false, "content": {"answer": "待", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 96, "finish": false, "content": {"answer": "办", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 97, "finish": false, "content": {"answer": "任务", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 98, "finish": false, "content": {"answer": "清单", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 99, "finish": false, "content": {"answer": "\n", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 100, "finish": false, "content": {"answer": "|", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 101, "finish": false, "content": {"answer": " ", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 102, "finish": false, "content": {"answer": "序号", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 103, "finish": false, "content": {"answer": " |", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 104, "finish": false, "content": {"answer": " ", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 105, "finish": false, "content": {"answer": "任务", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 106, "finish": false, "content": {"answer": "事项", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 107, "finish": false, "content": {"answer": " |", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 108, "finish": false, "content": {"answer": " ", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 109, "finish": false, "content": {"answer": "负责人", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 110, "finish": false, "content": {"answer": " |", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 111, "finish": false, "content": {"answer": " ", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 112, "finish": false, "content": {"answer": "截止", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 113, "finish": false, "content": {"answer": "日期", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 114, "finish": false, "content": {"answer": " |", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 115, "finish": false, "content": {"answer": " ", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 116, "finish": false, "content": {"answer": "优先级", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 117, "finish": false, "content": {"answer": " |", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 118, "finish": false, "content": {"answer": "\n", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 119, "finish": false, "content": {"answer": "|", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 120, "finish": false, "content": {"answer": " ---", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 121, "finish": false, "content": {"answer": " |", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 122, "finish": false, "content": {"answer": " ---", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 123, "finish": false, "content": {"answer": " |", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 124, "finish": false, "content": {"answer": " ---", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 125, "finish": false, "content": {"answer": " |", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 126, "finish": false, "content": {"answer": " ---", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 127, "finish": false, "content": {"answer": " |", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 128, "finish": false, "content": {"answer": " ---", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 129, "finish": false, "content": {"answer": " |", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 130, "finish": false, "content": {"answer": "\n", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 131, "finish": false, "content": {"answer": "|", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 132, "finish": false, "content": {"answer": " ", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 133, "finish": false, "content": {"answer": "1", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 134, "finish": false, "content": {"answer": " |", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 135, "finish": false, "content": {"answer": " ", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 136, "finish": false, "content": {"answer": "提交", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 137, "finish": false, "content": {"answer": "蓝鲸", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 138, "finish": false, "content": {"answer": "接口", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 139, "finish": false, "content": {"answer": "文档", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 140, "finish": false, "content": {"answer": " |", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 141, "finish": false, "content": {"answer": " ", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 142, "finish": false, "content": {"answer": "王一", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 143, "finish": false, "content": {"answer": "鸣", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 144, "finish": false, "content": {"answer": " |", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 145, "finish": false, "content": {"answer": " ", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 146, "finish": false, "content": {"answer": "明天", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 147, "finish": false, "content": {"answer": "前", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 148, "finish": false, "content": {"answer": "（", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 149, "finish": false, "content": {"answer": "推算", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 150, "finish": false, "content": {"answer": "：", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 151, "finish": false, "content": {"answer": "2", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 152, "finish": false, "content": {"answer": "0", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 153, "finish": false, "content": {"answer": "2", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 154, "finish": false, "content": {"answer": "6", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 155, "finish": false, "content": {"answer": "-", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 156, "finish": false, "content": {"answer": "1", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 157, "finish": false, "content": {"answer": "0", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 158, "finish": false, "content": {"answer": "-", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 159, "finish": false, "content": {"answer": "3", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 160, "finish": false, "content": {"answer": "0", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 161, "finish": false, "content": {"answer": "）", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 162, "finish": false, "content": {"answer": " |", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 163, "finish": false, "content": {"answer": " ", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 164, "finish": false, "content": {"answer": "未", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 165, "finish": false, "content": {"answer": "明确", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 166, "finish": false, "content": {"answer": " |", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 167, "finish": false, "content": {"answer": "\n", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 168, "finish": false, "content": {"answer": "```", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 169, "finish": false, "content": {"answer": "\n\n", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 170, "finish": false, "content": {"answer": "```", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 171, "finish": false, "content": {"answer": "markdown", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 172, "finish": false, "content": {"answer": "\n", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 173, "finish": false, "content": {"answer": "##", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 174, "finish": false, "content": {"answer": " ", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 175, "finish": false, "content": {"answer": "待", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 176, "finish": false, "content": {"answer": "确认", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 177, "finish": false, "content": {"answer": "事项", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 178, "finish": false, "content": {"answer": "\n", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 179, "finish": false, "content": {"answer": "|", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 180, "finish": false, "content": {"answer": " ", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 181, "finish": false, "content": {"answer": "序号", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 182, "finish": false, "content": {"answer": " |", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 183, "finish": false, "content": {"answer": " ", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 184, "finish": false, "content": {"answer": "任务", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 185, "finish": false, "content": {"answer": " |", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 186, "finish": false, "content": {"answer": " ", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 187, "finish": false, "content": {"answer": "缺失", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 188, "finish": false, "content": {"answer": "字段", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 189, "finish": false, "content": {"answer": " |", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 190, "finish": false, "content": {"answer": " ", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 191, "finish": false, "content": {"answer": "原文", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 192, "finish": false, "content": {"answer": "线索", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 193, "finish": false, "content": {"answer": " |", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 194, "finish": false, "content": {"answer": "\n", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 195, "finish": false, "content": {"answer": "|", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 196, "finish": false, "content": {"answer": " ---", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 197, "finish": false, "content": {"answer": " |", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 198, "finish": false, "content": {"answer": " ---", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 199, "finish": false, "content": {"answer": " |", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 200, "finish": false, "content": {"answer": " ---", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 201, "finish": false, "content": {"answer": " |", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 202, "finish": false, "content": {"answer": " ---", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 203, "finish": false, "content": {"answer": " |", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 204, "finish": false, "content": {"answer": "\n", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 205, "finish": false, "content": {"answer": "|", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 206, "finish": false, "content": {"answer": " ", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 207, "finish": false, "content": {"answer": "1", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 208, "finish": false, "content": {"answer": " |", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 209, "finish": false, "content": {"answer": " ", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 210, "finish": false, "content": {"answer": "提交", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 211, "finish": false, "content": {"answer": "蓝鲸", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 212, "finish": false, "content": {"answer": "接口", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 213, "finish": false, "content": {"answer": "文档", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 214, "finish": false, "content": {"answer": " |", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 215, "finish": false, "content": {"answer": " ", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 216, "finish": false, "content": {"answer": "优先级", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 217, "finish": false, "content": {"answer": " |", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 218, "finish": false, "content": {"answer": " ", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 219, "finish": false, "content": {"answer": "原文", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 220, "finish": false, "content": {"answer": "无", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 221, "finish": false, "content": {"answer": "相关", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 222, "finish": false, "content": {"answer": "信息", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 223, "finish": false, "content": {"answer": " |", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 224, "finish": false, "content": {"answer": "\n", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 225, "finish": false, "content": {"answer": "```", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 226, "finish": false, "content": {"answer": "\n\n", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 227, "finish": false, "content": {"answer": "```", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 228, "finish": false, "content": {"answer": "json", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 229, "finish": false, "content": {"answer": "\n", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 230, "finish": false, "content": {"answer": "[", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 231, "finish": false, "content": {"answer": "\n", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 232, "finish": false, "content": {"answer": " ", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 233, "finish": false, "content": {"answer": " {", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 234, "finish": false, "content": {"answer": "\n", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 235, "finish": false, "content": {"answer": "   ", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 236, "finish": false, "content": {"answer": " \"", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 237, "finish": false, "content": {"answer": "task", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 238, "finish": false, "content": {"answer": "\":", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 239, "finish": false, "content": {"answer": " \"", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 240, "finish": false, "content": {"answer": "提交", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 241, "finish": false, "content": {"answer": "蓝鲸", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 242, "finish": false, "content": {"answer": "接口", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 243, "finish": false, "content": {"answer": "文档", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 244, "finish": false, "content": {"answer": "\",", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 245, "finish": false, "content": {"answer": "\n", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 246, "finish": false, "content": {"answer": "   ", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 247, "finish": false, "content": {"answer": " \"", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 248, "finish": false, "content": {"answer": "owner", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 249, "finish": false, "content": {"answer": "\":", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 250, "finish": false, "content": {"answer": " \"", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 251, "finish": false, "content": {"answer": "王一", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 252, "finish": false, "content": {"answer": "鸣", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 253, "finish": false, "content": {"answer": "\",", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 254, "finish": false, "content": {"answer": "\n", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 255, "finish": false, "content": {"answer": "   ", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 256, "finish": false, "content": {"answer": " \"", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 257, "finish": false, "content": {"answer": "due", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 258, "finish": false, "content": {"answer": "_date", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 259, "finish": false, "content": {"answer": "\":", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 260, "finish": false, "content": {"answer": " \"", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 261, "finish": false, "content": {"answer": "2", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 262, "finish": false, "content": {"answer": "0", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 263, "finish": false, "content": {"answer": "2", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 264, "finish": false, "content": {"answer": "6", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 265, "finish": false, "content": {"answer": "-", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 266, "finish": false, "content": {"answer": "1", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 267, "finish": false, "content": {"answer": "0", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 268, "finish": false, "content": {"answer": "-", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 269, "finish": false, "content": {"answer": "3", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 270, "finish": false, "content": {"answer": "0", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 271, "finish": false, "content": {"answer": "\",", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 272, "finish": false, "content": {"answer": "\n", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 273, "finish": false, "content": {"answer": "   ", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 274, "finish": false, "content": {"answer": " \"", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 275, "finish": false, "content": {"answer": "due", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 276, "finish": false, "content": {"answer": "_date", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 277, "finish": false, "content": {"answer": "_raw", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 278, "finish": false, "content": {"answer": "\":", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 279, "finish": false, "content": {"answer": " \"", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 280, "finish": false, "content": {"answer": "明天", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 281, "finish": false, "content": {"answer": "前", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 282, "finish": false, "content": {"answer": "\",", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 283, "finish": false, "content": {"answer": "\n", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 284, "finish": false, "content": {"answer": "   ", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 285, "finish": false, "content": {"answer": " \"", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 286, "finish": false, "content": {"answer": "priority", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 287, "finish": false, "content": {"answer": "\":", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 288, "finish": false, "content": {"answer": " \"", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 289, "finish": false, "content": {"answer": "未", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 290, "finish": false, "content": {"answer": "明确", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 291, "finish": false, "content": {"answer": "\",", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 292, "finish": false, "content": {"answer": "\n", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 293, "finish": false, "content": {"answer": "   ", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 294, "finish": false, "content": {"answer": " \"", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 295, "finish": false, "content": {"answer": "priority", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 296, "finish": false, "content": {"answer": "_b", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 297, "finish": false, "content": {"answer": "asis", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 298, "finish": false, "content": {"answer": "\":", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 299, "finish": false, "content": {"answer": " \"", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 300, "finish": false, "content": {"answer": "无", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 301, "finish": false, "content": {"answer": "\"", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 302, "finish": false, "content": {"answer": "\n", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 303, "finish": false, "content": {"answer": " ", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 304, "finish": false, "content": {"answer": " }", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 305, "finish": false, "content": {"answer": "\n", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 306, "finish": false, "content": {"answer": "]", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 307, "finish": false, "content": {"answer": "\n", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 308, "finish": false, "content": {"answer": "```", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "answer", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "342630ba-f355-4b91-9933-45d8945c9baf", "sequence_id": 309, "finish": true, "content": {"answer": "", "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": null}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+
+event: message
+data: {"type": "message_end", "session_id": "mtb-7ff95265f25c4a79a28f470764a4b1dd", "query_msg_id": "", "reply_id": "eb600787-55f8-44f3-88f3-e99dd380abf3", "msg_id": "872d1d93-c620-4f24-9636-9a7a85de1fc7", "sequence_id": 310, "finish": true, "content": {"answer": null, "thinking": null, "tool_request": null, "tool_response": null, "error": null, "message_start": null, "message_end": {"code": "0", "message": "", "token_cost": {"input_tokens": 0, "output_tokens": 0, "total_tokens": 0}, "time_cost_ms": 6468}}, "log_id": "20261030065749F4E8105EA8E2DD1D0BAC"}
+

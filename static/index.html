@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>会议任务看板</title>
+<style>
+  :root {
+    --bg: #f5f6f8; --panel: #fff; --text: #1f2329; --muted: #6b7280; --line: #e5e7eb;
+    --primary: #2f6fed; --primary-dark: #2458c4; --warn-bg: #fff4e5; --warn: #b45309;
+    --danger: #dc2626; --ok: #15803d; --radius: 10px;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif;
+         background: var(--bg); color: var(--text); font-size: 14px; }
+  header { display: flex; align-items: center; justify-content: space-between;
+           padding: 14px 24px; background: var(--panel); border-bottom: 1px solid var(--line); }
+  header h1 { font-size: 18px; margin: 0; }
+  .badge { font-size: 12px; padding: 3px 8px; border-radius: 999px; background: #eef2ff; color: var(--primary); }
+  .badge.unverified { background: #f3f4f6; color: #6b7280; }
+  .badge.success { background: #dcfce7; color: #15803d; }
+  .badge.failure { background: #fee2e2; color: #dc2626; }
+  #parseWarnings { white-space: pre-wrap; }
+  .demo-warning { background: #fff4cc; color: #854d0e; border: 2px solid #eab308; padding: 12px; margin-bottom: 12px; font-weight: 600; border-radius: 8px; }
+  .badge.mock { background: var(--warn-bg); color: var(--warn); }
+  main { display: grid; grid-template-columns: minmax(380px, 2fr) 3fr; gap: 16px; padding: 16px 24px; }
+  .panel { background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius); padding: 16px; }
+  .panel h2 { font-size: 15px; margin: 0 0 12px; }
+  textarea { width: 100%; min-height: 180px; padding: 10px; border: 1px solid var(--line); border-radius: 8px;
+             font: inherit; resize: vertical; }
+  button { font: inherit; cursor: pointer; border-radius: 8px; border: 1px solid var(--line);
+           background: #fff; padding: 7px 14px; }
+  button.primary { background: var(--primary); border-color: var(--primary); color: #fff; }
+  button.primary:hover { background: var(--primary-dark); }
+  button:disabled { opacity: .55; cursor: not-allowed; }
+  button.link { border: none; background: none; color: var(--primary); padding: 2px 4px; white-space: nowrap; }
+  button.link.danger { color: var(--danger); }
+  .row { display: flex; gap: 8px; align-items: center; margin-top: 10px; flex-wrap: wrap; }
+  .msg { margin-top: 10px; padding: 8px 10px; border-radius: 8px; display: none; white-space: pre-wrap; }
+  .msg.info { display: block; background: #eef2ff; color: var(--primary-dark); }
+  .msg.error { display: block; background: #fef2f2; color: var(--danger); }
+  .msg.ok { display: block; background: #f0fdf4; color: var(--ok); }
+  details { margin-top: 12px; }
+  summary { cursor: pointer; color: var(--muted); }
+  pre.summary { white-space: pre-wrap; background: #fafafa; border: 1px solid var(--line); border-radius: 8px;
+                padding: 10px; max-height: 280px; overflow: auto; font-family: inherit; }
+  table { width: 100%; border-collapse: collapse; margin-top: 12px; }
+  th, td { border-bottom: 1px solid var(--line); padding: 6px 4px; text-align: left; vertical-align: top; }
+  th { font-weight: 600; color: var(--muted); font-size: 12px; }
+  td input { width: 100%; padding: 5px 6px; border: 1px solid var(--line); border-radius: 6px; font: inherit; }
+  td input.unknown, .owner.unknown { background: var(--warn-bg); color: var(--warn); border-color: #fcd9a8; }
+  .raw { font-size: 11px; color: var(--muted); margin-top: 2px; }
+  .board { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+  .col { background: #f9fafb; border: 1px solid var(--line); border-radius: 8px; padding: 8px; min-height: 300px; }
+  .col h3 { font-size: 13px; margin: 2px 4px 8px; display: flex; justify-content: space-between; }
+  .col h3 .count { color: var(--muted); font-weight: normal; }
+  .col.待分配 { border-top: 3px solid var(--warn); }
+  .col.待开始 { border-top: 3px solid #9ca3af; }
+  .col.进行中 { border-top: 3px solid var(--primary); }
+  .col.已完成 { border-top: 3px solid var(--ok); }
+  .card { background: #fff; border: 1px solid var(--line); border-radius: 8px; padding: 8px; margin-bottom: 8px; }
+  .card.needs-owner { border-color: #fcd9a8; background: #fffbf5; }
+  .card .title { font-weight: 600; margin-bottom: 6px; word-break: break-all; }
+  .card .meta { font-size: 12px; color: var(--muted); line-height: 1.7; }
+  .owner.unknown { padding: 0 4px; border-radius: 4px; border: 1px solid #fcd9a8; }
+  .card select, .card input { font: inherit; font-size: 12px; padding: 3px 4px; border: 1px solid var(--line);
+                              border-radius: 6px; }
+  .card .actions { display: flex; justify-content: space-between; align-items: center; margin-top: 6px; }
+  .card .edit { display: none; margin-top: 6px; }
+  .card .edit.open { display: grid; gap: 4px; }
+  .empty { color: var(--muted); font-size: 12px; text-align: center; padding: 16px 0; }
+  @media (max-width: 1100px) { main { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+<header>
+  <h1>会议任务看板</h1>
+  <span id="provider" class="badge">检测中…</span>
+</header>
+
+<main>
+  <!-- 左侧：提取与预览 -->
+  <section class="panel">
+    <h2>① 粘贴会议记录</h2>
+    <textarea id="meeting" placeholder="把会议记录、录音转写或纪要草稿粘贴到这里…"></textarea>
+    <div class="row">
+      <button id="btnExtract" class="primary">提取任务</button>
+      <button id="btnClear">清空</button>
+    </div>
+    <div id="extractMsg" class="msg"></div>
+
+    <div id="previewBox" style="display:none">
+      <div id="mockWarning" class="demo-warning" hidden>当前为演示模式，任务为固定示例，与输入无关，请勿保存为真实数据</div>
+      <details id="summaryBox">
+        <summary>查看 AI 生成的会议纪要</summary>
+        <pre id="summary" class="summary"></pre>
+      </details>
+      <div id="parseWarnings" class="demo-warning" role="status" hidden></div>
+      <div id="taskSection">
+      <h2 style="margin-top:16px">② 核对任务（可直接修改），确认后保存</h2>
+      <table>
+        <thead><tr><th style="width:36%">任务</th><th>负责人</th><th>截止日期</th><th>优先级</th><th></th></tr></thead>
+        <tbody id="previewBody"></tbody>
+      </table>
+      <div class="row">
+        <button id="btnAddRow">+ 添加一行</button>
+        <button id="btnSave" class="primary">确认保存到看板</button>
+        <button id="btnDiscard">放弃</button>
+      </div>
+      <div id="saveMsg" class="msg"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 右侧：看板 -->
+  <section class="panel">
+    <h2>任务看板</h2>
+    <div id="board" class="board"></div>
+  </section>
+</main>
+
+<script>
+const STATUSES = ["待分配", "待开始", "进行中", "已完成"];
+const UNKNOWN = "未明确";
+const $ = (id) => document.getElementById(id);
+let previewTasks = [];
+let lastMeetingText = "";
+let extractionId = null;
+let lastChatId = null;
+
+// ---------- 工具函数 ----------
+function el(tag, attrs = {}, ...children) {
+  const node = document.createElement(tag);
+  for (const [k, v] of Object.entries(attrs)) {
+    if (k === "class") node.className = v;
+    else if (k.startsWith("on")) node.addEventListener(k.slice(2), v);
+    else node.setAttribute(k, v);
+  }
+  for (const c of children) node.append(c instanceof Node ? c : document.createTextNode(c ?? ""));
+  return node;
+}
+function showMsg(id, type, text) { const m = $(id); m.className = "msg " + type; m.textContent = text; }
+function hideMsg(id) { $(id).className = "msg"; }
+const isUnknown = (v) => !v || v.trim() === "" || v.trim() === UNKNOWN;
+
+async function api(method, url, body) {
+  const resp = await fetch(url, {
+    method, headers: { "Content-Type": "application/json" },
+    body: body ? JSON.stringify(body) : undefined,
+  });
+  let data = null;
+  try { data = await resp.json(); } catch (_) {}
+  if (!resp.ok) {
+    let detail = data && data.detail;
+    if (Array.isArray(detail)) detail = detail.map((d) => d.msg).join("；");
+    const error = new Error(detail || `请求失败（HTTP ${resp.status}）`);
+    error.status = resp.status;
+    throw error;
+  }
+  return data;
+}
+
+// ---------- 提取 ----------
+async function extract() {
+  const text = $("meeting").value.trim();
+  if (!text) { showMsg("extractMsg", "error", "请先粘贴会议记录"); return; }
+  $("btnExtract").disabled = true;
+  $("btnExtract").textContent = "AI 处理中…";
+  showMsg("extractMsg", "info", "正在调用智能体，通常需要 10–40 秒，请稍候…");
+  $("previewBox").style.display = "none";
+  extractionId = null;
+  lastChatId = null;
+  try {
+    const data = await api("POST", "/api/extract", { meeting_text: text });
+    lastMeetingText = text;
+    extractionId = data.extraction_id;
+    lastChatId = data.chat_id || null;
+    const warnings = data.warnings || [];
+    $("parseWarnings").hidden = warnings.length === 0;
+    $("parseWarnings").textContent = warnings.join("\n");
+    previewTasks = data.tasks;
+    $("summary").textContent = data.summary || "（无纪要内容）";
+    $("previewBox").style.display = "block";
+    hideMsg("saveMsg");
+    if (data.has_tasks) {
+      const n = data.tasks.filter((t) => isUnknown(t.owner)).length;
+      showMsg("extractMsg", "ok", `提取到 ${data.tasks.length} 个任务` + (n ? `，其中 ${n} 个负责人未明确（已标黄）` : "") + "。请核对后保存。");
+      $("summaryBox").open = false;
+      $("taskSection").style.display = "block";
+    } else {
+      $("taskSection").style.display = "none";
+      showMsg("extractMsg", "info", "没有提取到待办任务：内容可能不是会议记录，或这次会议没有待办。可展开查看 AI 的说明。");
+      $("summaryBox").open = true;
+    }
+    renderPreview();
+  } catch (e) {
+    showMsg("extractMsg", "error", "提取失败：" + e.message + "\n（没有保存任何数据，可以重试）");
+  } finally {
+    $("btnExtract").disabled = false;
+    $("btnExtract").textContent = "提取任务";
+    await refreshProvider();
+  }
+}
+
+function renderPreview() {
+  const body = $("previewBody");
+  body.replaceChildren();
+  previewTasks.forEach((t, i) => {
+    const input = (key) => {
+      const inp = el("input", { value: t[key] || "" });
+      if (isUnknown(t[key])) inp.classList.add("unknown");
+      inp.addEventListener("input", () => {
+        t[key] = inp.value;
+        inp.classList.toggle("unknown", isUnknown(inp.value));
+      });
+      return inp;
+    };
+    const dueCell = el("td", {}, input("due_date"));
+    if (t.due_date_raw && !isUnknown(t.due_date_raw) && t.due_date_raw !== t.due_date)
+      dueCell.append(el("div", { class: "raw" }, "原文：" + t.due_date_raw));
+    const prioCell = el("td", {}, input("priority"));
+    if (t.priority_basis && t.priority_basis !== "无" && !isUnknown(t.priority_basis))
+      prioCell.append(el("div", { class: "raw" }, t.priority_basis));
+    body.append(el("tr", {},
+      el("td", {}, input("task")),
+      el("td", {}, input("owner")),
+      dueCell, prioCell,
+      el("td", {}, el("button", { class: "link danger", onclick: () => { previewTasks.splice(i, 1); renderPreview(); } }, "删除")),
+    ));
+  });
+  $("btnSave").disabled = previewTasks.length === 0 || !extractionId;
+}
+
+function addRow() {
+  previewTasks.push({ task: "", owner: UNKNOWN, due_date: UNKNOWN, due_date_raw: UNKNOWN, priority: UNKNOWN, priority_basis: "无" });
+  renderPreview();
+}
+
+async function save() {
+  if (!extractionId) { showMsg("saveMsg", "error", "请先重新提取任务"); return; }
+  const tasks = previewTasks.filter((t) => t.task && t.task.trim());
+  if (!tasks.length) { showMsg("saveMsg", "error", "没有可保存的任务"); return; }
+  $("btnSave").disabled = true;
+  try {
+    const data = await api("POST", "/api/tasks", { extraction_id: extractionId, chat_id: lastChatId, meeting_text: lastMeetingText, tasks });
+    showMsg("extractMsg", "ok", `已保存 ${data.saved} 个任务到看板。`);
+    $("previewBox").style.display = "none";
+    previewTasks = [];
+    extractionId = null;
+    lastChatId = null;
+    await loadBoard();
+  } catch (e) {
+    if (e.status === 409) {
+      extractionId = null;
+      lastChatId = null;
+      previewTasks = [];
+      $("previewBox").style.display = "none";
+      showMsg("extractMsg", "error", e.message);
+      await loadBoard();
+      return;
+    }
+    showMsg("saveMsg", "error", e.message);
+    $("btnSave").disabled = false;
+  }
+}
+
+// ---------- 看板 ----------
+async function loadBoard() {
+  let tasks = [];
+  try { tasks = (await api("GET", "/api/tasks")).tasks; }
+  catch (e) { $("board").textContent = "加载看板失败：" + e.message; return; }
+  const board = $("board");
+  board.replaceChildren();
+  for (const s of STATUSES) {
+    const list = tasks.filter((t) => t.status === s);
+    const col = el("div", { class: "col " + s }, el("h3", {}, s, el("span", { class: "count" }, String(list.length))));
+    if (!list.length) col.append(el("div", { class: "empty" }, "暂无"));
+    list.forEach((t) => col.append(card(t)));
+    board.append(col);
+  }
+}
+
+function card(t) {
+  const unknownOwner = isUnknown(t.owner);
+  const select = el("select", { onchange: (e) => patch(t.id, { status: e.target.value }) },
+    ...STATUSES.map((s) => { const o = el("option", { value: s }, s); if (s === t.status) o.selected = true; return o; }));
+
+  const ownerInp = el("input", { value: t.owner, placeholder: "负责人" });
+  const dueInp = el("input", { value: t.due_date, placeholder: "截止日期" });
+  const prioInp = el("input", { value: t.priority, placeholder: "优先级" });
+  const edit = el("div", { class: "edit" }, ownerInp, dueInp, prioInp,
+    el("button", { onclick: () => patch(t.id, { owner: ownerInp.value.trim() || UNKNOWN,
+      due_date: dueInp.value.trim() || UNKNOWN, priority: prioInp.value.trim() || UNKNOWN }) }, "保存修改"));
+
+  let armed = false;
+  const delBtn = el("button", { class: "link danger" }, "删除");
+  delBtn.addEventListener("click", async () => {
+    if (!armed) { armed = true; delBtn.textContent = "再点一次确认"; setTimeout(() => { armed = false; delBtn.textContent = "删除"; }, 3000); return; }
+    try { await api("DELETE", `/api/tasks/${t.id}`); await loadBoard(); } catch (e) { alert(e.message); }
+  });
+
+  const dueText = t.due_date + (t.due_date_raw && !isUnknown(t.due_date_raw) && t.due_date_raw !== t.due_date ? `（原文：${t.due_date_raw}）` : "");
+  return el("div", { class: "card" + (unknownOwner ? " needs-owner" : "") },
+    el("div", { class: "title" }, t.task),
+    el("div", { class: "meta" },
+      "负责人：", el("span", { class: "owner" + (unknownOwner ? " unknown" : "") }, t.owner), el("br"),
+      "截止：" + dueText, el("br"),
+      "优先级：" + t.priority, el("br"),
+      el("span", { title: t.source_meeting }, "来源：" + (t.source_meeting || "-").slice(0, 18) + "…")),
+    el("div", { class: "actions" }, select,
+      el("span", {}, el("button", { class: "link", onclick: () => edit.classList.toggle("open") }, "编辑"), delBtn)),
+    edit);
+}
+
+async function patch(id, fields) {
+  try { await api("PATCH", `/api/tasks/${id}`, fields); }
+  catch (e) { alert("更新失败：" + e.message); }
+  await loadBoard();
+}
+
+// ---------- 初始化 ----------
+async function refreshProvider() {
+  try {
+    const h = await api("GET", "/api/health");
+    const p = $("provider");
+    $("mockWarning").hidden = h.ai_provider !== "mock";
+    p.title = "";
+    if (h.last_call && h.last_call.success) {
+      const time = new Date(h.last_call.time);
+      const hhmm = String(time.getHours()).padStart(2, "0") + ":" + String(time.getMinutes()).padStart(2, "0");
+      p.textContent = "最近调用成功 " + hhmm;
+      p.className = "badge success";
+    } else if (h.last_call) {
+      p.textContent = "最近调用失败";
+      p.className = "badge failure";
+      p.title = h.last_call.error || "调用失败";
+    } else {
+      p.textContent = h.ai_configured ? "已配置，未验证" : "AI 未配置";
+      p.className = "badge unverified";
+    }
+  } catch (_) {
+    $("provider").textContent = "后端未连接";
+    $("provider").className = "badge unverified";
+  }
+}
+
+async function init() {
+  await refreshProvider();
+  $("btnExtract").onclick = extract;
+  $("btnClear").onclick = () => { $("meeting").value = ""; previewTasks = []; extractionId = null; lastChatId = null; $("previewBox").style.display = "none"; hideMsg("extractMsg"); };
+  $("btnAddRow").onclick = addRow;
+  $("btnSave").onclick = save;
+  $("btnDiscard").onclick = () => { previewTasks = []; extractionId = null; lastChatId = null; $("previewBox").style.display = "none"; hideMsg("extractMsg"); };
+  loadBoard();
+}
+init();
+</script>
+</body>
+</html>
