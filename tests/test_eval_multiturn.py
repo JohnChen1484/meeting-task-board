@@ -45,8 +45,8 @@ def fake_agent(monkeypatch):
         text = body["content"]["query"]["prompt"][0]["content"]["text"]
         calls.append({"session_id": sid, "text": text, "auth": req.get_header("Authorization")})
         history.setdefault(sid, []).append(text)
-        if "代号是什么" in text:
-            answer = "项目代号是蓝鲸。" if any("蓝鲸" in t for t in history[sid]) else "本次对话中没有找到项目代号。"
+        if "刚才润色的结果" in text:
+            answer = "蓝鲸项目下周上线，请抓紧测试。" if any("蓝鲸" in t for t in history[sid]) else "本次对话中没有找到你说的内容。"
         else:
             answer = f"第{len(history[sid])}轮：{text[:20]}"
         return FakeResponse(sse(answer))

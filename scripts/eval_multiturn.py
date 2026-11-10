@@ -158,8 +158,9 @@ def run_case(cfg: dict, case: dict, materials: dict, timeout: float) -> dict:
 def probe(cfg: dict, timeout: float) -> bool:
     sid = str(uuid.uuid4())
     print("记忆探测：同一 session_id 发送 2 轮……")
-    ask(cfg, "请记住项目代号：蓝鲸。只需回复“已记住”。", sid, timeout)
-    second = ask(cfg, "项目代号是什么？", sid, timeout)
+    # 两轮都在“文本优化”范围内，避免被人设当作越界请求拒答，造成误判
+    ask(cfg, "帮我润色：蓝鲸项目下周上线，大家抓紧把测试做完。", sid, timeout)
+    second = ask(cfg, "把刚才润色的结果压缩到 20 字以内。", sid, timeout)
     ok = "蓝鲸" in second
     print(f"第 2 轮回答：{second[:120]}")
     print("结果：通过，服务端按 session_id 保留了上下文" if ok
