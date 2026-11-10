@@ -133,3 +133,6 @@
 - 先输出会议纪要、待办任务清单、待确认事项三部分；
 - 最后输出一个 ```json 代码块，代码块内只能是合法的 JSON 数组，字段严格为 task, owner, due_date, due_date_raw, priority, priority_basis；
 - 没有待办任务时输出空数组 []；输入不是会议记录时，不输出纪要，只输出提示语和空数组 []。
+- JSON 中的 due_date 只能是 YYYY-MM-DD 格式的日期或「未明确」，绝不能写其他文字；需要推算的相对日期，在 due_date 中直接写推算结果，原文表述写在 due_date_raw；
+- 一个任务同时有开始时间和完成期限时（如"下周一启动，11月6日前完成"），due_date 填完成期限，开始时间写进 due_date_raw；
+- JSON 中的 priority 只能是「高」「中」「低」「未明确」四个值之一，依据写在 priority_basis。
