@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>知识库问答</title>
+<style>
+  :root {
+    --bg: #f5f6f8; --panel: #fff; --text: #1f2329; --muted: #6b7280; --line: #e5e7eb;
+    --primary: #2f6fed; --primary-dark: #2458c4; --danger: #dc2626; --radius: 10px;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif;
+         background: var(--bg); color: var(--text); font-size: 14px; }
+  header { padding: 14px 24px; background: var(--panel); border-bottom: 1px solid var(--line); }
+  header h1 { font-size: 18px; margin: 0; }
+  .page-nav { padding: 10px 24px; background: var(--panel); border-bottom: 1px solid var(--line); color: var(--muted); }
+  .page-nav a { color: var(--primary); text-decoration: none; }
+  .page-nav a[aria-current="page"] { color: var(--text); font-weight: 600; }
+  .page-nav a:hover { text-decoration: underline; }
+  main { max-width: 960px; margin: 0 auto; padding: 16px 24px; display: grid; gap: 16px; }
+  .panel { background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius); padding: 16px; }
+  .panel h2, label { display: block; font-size: 15px; font-weight: 600; margin: 0 0 12px; }
+  textarea { width: 100%; min-height: 130px; padding: 10px; border: 1px solid var(--line); border-radius: 8px;
+             font: inherit; resize: vertical; }
+  button { font: inherit; cursor: pointer; border-radius: 8px; border: 1px solid var(--line);
+           background: #fff; padding: 7px 14px; text-align: left; }
+  button.primary { background: var(--primary); border-color: var(--primary); color: #fff; }
+  button.primary:hover { background: var(--primary-dark); }
+  button:disabled { opacity: .55; cursor: not-allowed; }
+  .row { display: flex; gap: 8px; align-items: center; margin-top: 10px; flex-wrap: wrap; }
+  .hint, #elapsed { color: var(--muted); font-size: 12px; }
+  .examples { display: grid; gap: 8px; margin-top: 12px; }
+  .examples button { color: var(--primary-dark); line-height: 1.5; }
+  .msg { margin-top: 10px; padding: 8px 10px; border-radius: 8px; white-space: pre-wrap; }
+  .msg.info { background: #eef2ff; color: var(--primary-dark); }
+  .msg.error { background: #fef2f2; color: var(--danger); }
+  #answer { white-space: pre-wrap; overflow-wrap: anywhere; line-height: 1.8; }
+  #elapsed { margin-top: 12px; }
+  textarea:focus-visible, button:focus-visible, a:focus-visible { outline: 2px solid var(--primary); outline-offset: 2px; }
+  @media (max-width: 600px) { main { padding: 12px; } header, .page-nav { padding-left: 16px; padding-right: 16px; } }
+</style>
+</head>
+<body>
+<header><h1>知识库问答</h1></header>
+<nav class="page-nav" aria-label="页面导航">
+  <a href="/">会议纪要任务看板</a>｜<a href="/rag" aria-current="page">知识库问答</a>
+</nav>
+<main>
+  <section class="panel">
+    <form id="askForm">
+      <label for="question">向知识库提问</label>
+      <textarea id="question" placeholder="输入你想了解的问题…" aria-describedby="questionHint" required></textarea>
+      <div class="row">
+        <button id="btnAsk" class="primary" type="submit">提问</button>
+        <span id="questionHint" class="hint">每题最多 500 字，每次提问独立查询。</span>
+      </div>
+    </form>
+    <div id="queryMsg" class="msg" role="status" aria-live="polite" hidden></div>
+    <div class="examples" aria-label="示例问题">
+      <span class="hint">试试这些问题</span>
+      <button type="button" class="example">婚假有几天？</button>
+      <button type="button" class="example">我累计工作满 3 年，在本公司工作满 2 年，现在每年一共有几天年假？</button>
+      <button type="button" class="example">听说青禾会议助手所有版本都永久免费，是真的吗？</button>
+      <button type="button" class="example">公司的股票代码是多少？</button>
+    </div>
+  </section>
+  <section id="answerPanel" class="panel" aria-live="polite" hidden>
+    <h2>知识库回答</h2>
+    <div id="answer"></div>
+    <div id="elapsed"></div>
+  </section>
+</main>
+<script>
+const $ = (id) => document.getElementById(id);
+const exampleButtons = Array.from(document.querySelectorAll('.example'));
+let querying = false;
+
+function formatAnswer(text) {
+  const escaped = String(text).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+  return escaped.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
+}
+
+function showMessage(type, text) {
+  $('queryMsg').className = 'msg ' + type;
+  $('queryMsg').textContent = text;
+  $('queryMsg').hidden = false;
+}
+
+async function askQuestion() {
+  if (querying) return;
+  const question = $('question').value.trim();
+  if (!question) { showMessage('error', '请输入问题'); return; }
+  if (Array.from($('question').value).length > 500) { showMessage('error', '问题不能超过 500 字'); return; }
+  querying = true;
+  $('btnAsk').disabled = true;
+  $('question').disabled = true;
+  exampleButtons.forEach(button => { button.disabled = true; });
+  $('answerPanel').hidden = true;
+  $('answer').textContent = '';
+  $('elapsed').textContent = '';
+  showMessage('info', '正在查询知识库…');
+  try {
+    const response = await fetch('/api/rag/ask', {
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ question }),
+    });
+    let data = null;
+    try { data = await response.json(); } catch (_) {}
+    if (!response.ok) throw new Error(data && typeof data.detail === 'string' ? data.detail : '知识库请求失败，请稍后重试');
+    if (!data || typeof data.answer !== 'string' || !data.answer.trim() ||
+        typeof data.elapsed_seconds !== 'number' || !Number.isFinite(data.elapsed_seconds)) {
+      throw new Error('知识库返回内容异常，请稍后重试');
+    }
+    $('answer').innerHTML = formatAnswer(data.answer);
+    $('elapsed').textContent = `耗时：${data.elapsed_seconds.toFixed(2)} 秒`;
+    $('answerPanel').hidden = false;
+    $('queryMsg').hidden = true;
+  } catch (error) {
+    showMessage('error', error instanceof TypeError ? '无法连接服务，请检查网络或本地服务是否启动' : error.message);
+  } finally {
+    querying = false;
+    $('btnAsk').disabled = false;
+    $('question').disabled = false;
+    exampleButtons.forEach(button => { button.disabled = false; });
+  }
+}
+
+$('askForm').addEventListener('submit', event => { event.preventDefault(); askQuestion(); });
+exampleButtons.forEach(button => {
+  button.addEventListener('click', () => {
+    if (querying) return;
+    $('question').value = button.textContent;
+    askQuestion();
+  });
+});
+</script>
+</body>
+</html>

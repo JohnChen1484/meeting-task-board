@@ -7,6 +7,7 @@
 from __future__ import annotations
 
 import logging
+import time
 from logging.handlers import RotatingFileHandler
 from datetime import datetime, timezone
 from uuid import UUID, uuid4
@@ -18,13 +19,14 @@ from fastapi.exceptions import RequestValidationError
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel, Field, field_validator
 
-from .ai_client import AIClient, AIParseError, AITimeoutError, build_client
+from .ai_client import AIClient, AIError, AIParseError, AITimeoutError, build_client, build_rag_client
 from .config import BASE_DIR, Settings
 from .db import STATUSES, TaskDB, DuplicateBatchError, DuplicateMeetingError, UnknownExtractionError
 from .validation import TaskRules
 from .errors import safe_error
 
 MAX_MEETING_CHARS = 20000
+MAX_QUESTION_CHARS = 500
 
 
 def setup_logging() -> None:
@@ -59,6 +61,19 @@ class ExtractRequest(BaseModel):
         if len(v) > MAX_MEETING_CHARS:
             raise ValueError(f"会议记录过长（超过 {MAX_MEETING_CHARS} 字），请分段处理")
         return v
+
+
+class RagAskRequest(BaseModel):
+    question: str
+
+    @field_validator("question")
+    @classmethod
+    def valid_question(cls, value: str) -> str:
+        if not value.strip():
+            raise ValueError("问题不能为空")
+        if len(value) > MAX_QUESTION_CHARS:
+            raise ValueError("问题不能超过 500 字")
+        return value.strip()
 
 
 class TaskIn(TaskRules):
@@ -130,6 +145,9 @@ def create_app(settings: Optional[Settings] = None, ai_client: Optional[AIClient
 
     @app.exception_handler(RequestValidationError)
     async def validation_error(request, exc):
+        if request.url.path == "/api/rag/ask":
+            # 固定提示，不回显输入、JSON 解析细节或可能含令牌的字段名。
+            return JSONResponse(status_code=400, content={"detail": "请输入非空问题，问题必须是 500 字以内的文本"})
         # 不回显 Pydantic 的 input/context，避免原始输入或令牌出现在错误响应中。
         messages = []
         for error in exc.errors():
@@ -191,6 +209,28 @@ def create_app(settings: Optional[Settings] = None, ai_client: Optional[AIClient
             "has_tasks": len(result.tasks) > 0,
         }
 
+    @app.post("/api/rag/ask")
+    def rag_ask(req: RagAskRequest):
+        """知识库纯文本问答，不添加会议提示词、不解析 JSON、不访问数据库。"""
+        try:
+            rag_client = build_rag_client(settings)
+        except ValueError as exc:
+            raise HTTPException(status_code=503, detail=str(exc)) from None
+        started = time.monotonic()
+        try:
+            result = rag_client.stream_run(req.question)
+            if not result.answer.strip():
+                raise AIError("空回答")
+            answer = result.answer.replace(settings.rag_api_token, "[已脱敏]")
+            return {"answer": answer, "elapsed_seconds": round(time.monotonic() - started, 3)}
+        except AITimeoutError:
+            raise HTTPException(status_code=504, detail="知识库查询超时，请稍后重试") from None
+        except Exception:
+            # 上游错误和异常可能包含敏感信息；不记录异常或返回原始内容。
+            raise HTTPException(status_code=502, detail="知识库调用失败，请检查部署服务状态及 RAG API 令牌权限") from None
+        finally:
+            rag_client._http.close()
+
     @app.post("/api/tasks")
     def save_tasks(req: SaveRequest):
         """用户确认后批量保存。"""
@@ -239,6 +279,10 @@ def create_app(settings: Optional[Settings] = None, ai_client: Optional[AIClient
     @app.get("/")
     def index():
         return FileResponse(static_dir / "index.html")
+
+    @app.get("/rag")
+    def rag_page():
+        return FileResponse(static_dir / "rag.html")
 
     return app
 

@@ -9,7 +9,7 @@ import json
 import logging
 import re
 import time
-from dataclasses import dataclass, field
+from dataclasses import dataclass, field, replace
 from typing import List, Protocol
 from threading import Event, Thread
 from uuid import uuid4
@@ -490,6 +490,28 @@ class CozeDeployClient:
         result.warnings = [safe_error(w, self.token) for w in result.warnings]
         return result
 
+
+
+def build_rag_client(settings: Settings, http: httpx.Client | None = None) -> CozeDeployClient:
+    """只映射独立 RAG 配置；SSE、会话生成和超时继续由同一客户端负责。"""
+    missing = []
+    if not settings.rag_deploy_url.strip():
+        missing.append("RAG_DEPLOY_URL")
+    if settings.rag_project_id is None or settings.rag_project_id == "":
+        missing.append("RAG_PROJECT_ID")
+    if not settings.rag_api_token.strip():
+        missing.append("RAG_API_TOKEN")
+    if missing:
+        raise ValueError("知识库配置缺失：请设置 " + "、".join(missing))
+    rag_settings = replace(settings, ai_provider="coze_deploy",
+                           coze_deploy_url=settings.rag_deploy_url,
+                           coze_project_id=settings.rag_project_id,
+                           coze_api_token=settings.rag_api_token)
+    try:
+        return CozeDeployClient(rag_settings, http=http)
+    except ValueError:
+        # 不回显配置值，避免 URL、项目 ID 等误填令牌时泄露。
+        raise ValueError("知识库配置无效：请检查 RAG_DEPLOY_URL、RAG_PROJECT_ID 和 COZE_TIMEOUT_SECONDS") from None
 
 
 class MockClient:

@@ -2,7 +2,7 @@
 from __future__ import annotations
 
 import os
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from pathlib import Path
 from urllib.parse import urlsplit
 
@@ -49,6 +49,9 @@ class Settings:
     # 长问题可能 20 秒以上没有任何字节，评测时需要放宽。
     coze_read_timeout_seconds: float = 20.0
     db_path: str = str(BASE_DIR / "data" / "tasks.db")
+    rag_deploy_url: str = ""
+    rag_project_id: str | int | None = None
+    rag_api_token: str = field(default="", repr=False)
 
     @classmethod
     def from_env(cls) -> "Settings":
@@ -68,4 +71,8 @@ class Settings:
             coze_timeout_seconds=float(os.getenv("COZE_TIMEOUT_SECONDS", "90")),
             coze_read_timeout_seconds=float(os.getenv("COZE_READ_TIMEOUT_SECONDS", "20")),
             db_path=db_path,
+            rag_deploy_url=os.getenv("RAG_DEPLOY_URL", "").strip().rstrip("/"),
+            # 延后到问答接口校验，RAG 未配置或配置错误不影响会议纪要启动。
+            rag_project_id=os.getenv("RAG_PROJECT_ID", "").strip(),
+            rag_api_token=os.getenv("RAG_API_TOKEN", "").strip(),
         )

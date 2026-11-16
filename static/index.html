@@ -16,6 +16,10 @@
   header { display: flex; align-items: center; justify-content: space-between;
            padding: 14px 24px; background: var(--panel); border-bottom: 1px solid var(--line); }
   header h1 { font-size: 18px; margin: 0; }
+  .page-nav { padding: 10px 24px; background: var(--panel); border-bottom: 1px solid var(--line); color: var(--muted); }
+  .page-nav a { color: var(--primary); text-decoration: none; }
+  .page-nav a[aria-current="page"] { color: var(--text); font-weight: 600; }
+  .page-nav a:hover { text-decoration: underline; }
   .badge { font-size: 12px; padding: 3px 8px; border-radius: 999px; background: #eef2ff; color: var(--primary); }
   .badge.unverified { background: #f3f4f6; color: #6b7280; }
   .badge.success { background: #dcfce7; color: #15803d; }
@@ -77,6 +81,9 @@
   <h1>会议任务看板</h1>
   <span id="provider" class="badge">检测中…</span>
 </header>
+<nav class="page-nav" aria-label="页面导航">
+  <a href="/" aria-current="page">会议纪要任务看板</a>｜<a href="/rag">知识库问答</a>
+</nav>
 
 <main>
   <!-- 左侧：提取与预览 -->
