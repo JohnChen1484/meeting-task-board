@@ -24,6 +24,7 @@ from .config import BASE_DIR, Settings
 from .db import STATUSES, TaskDB, DuplicateBatchError, DuplicateMeetingError, UnknownExtractionError
 from .validation import TaskRules
 from .errors import safe_error
+from .rag_answer import to_response
 
 MAX_MEETING_CHARS = 20000
 MAX_QUESTION_CHARS = 500
@@ -211,7 +212,7 @@ def create_app(settings: Optional[Settings] = None, ai_client: Optional[AIClient
 
     @app.post("/api/rag/ask")
     def rag_ask(req: RagAskRequest):
-        """知识库纯文本问答，不添加会议提示词、不解析 JSON、不访问数据库。"""
+        """知识库独立问答，解析工作流附带的结构化信息，不访问数据库。"""
         try:
             rag_client = build_rag_client(settings)
         except ValueError as exc:
@@ -219,10 +220,19 @@ def create_app(settings: Optional[Settings] = None, ai_client: Optional[AIClient
         started = time.monotonic()
         try:
             result = rag_client.stream_run(req.question)
-            if not result.answer.strip():
-                raise AIError("空回答")
             answer = result.answer.replace(settings.rag_api_token, "[已脱敏]")
-            return {"answer": answer, "elapsed_seconds": round(time.monotonic() - started, 3)}
+            response = to_response(answer)
+            # JSON 转义解码可能重新组成令牌，结构化字段也须再脱敏。
+            for key, value in response.items():
+                if isinstance(value, str):
+                    response[key] = value.replace(settings.rag_api_token, "[已脱敏]")
+            for source in response["sources"]:
+                for key, value in source.items():
+                    if isinstance(value, str):
+                        source[key] = value.replace(settings.rag_api_token, "[已脱敏]")
+            if not response["answer"].strip():
+                raise AIError("空回答")
+            return {**response, "elapsed_seconds": round(time.monotonic() - started, 3)}
         except AITimeoutError:
             raise HTTPException(status_code=504, detail="知识库查询超时，请稍后重试") from None
         except Exception:

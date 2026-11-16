@@ -503,11 +503,17 @@ def build_rag_client(settings: Settings, http: httpx.Client | None = None) -> Co
         missing.append("RAG_API_TOKEN")
     if missing:
         raise ValueError("知识库配置缺失：请设置 " + "、".join(missing))
-    rag_settings = replace(settings, ai_provider="coze_deploy",
-                           coze_deploy_url=settings.rag_deploy_url,
-                           coze_project_id=settings.rag_project_id,
-                           coze_api_token=settings.rag_api_token)
     try:
+        # 下限不应掩盖原有的非法超时配置。
+        if any(not math.isfinite(timeout) or timeout <= 0 for timeout in
+               (settings.coze_timeout_seconds, settings.coze_read_timeout_seconds)):
+            raise ValueError("超时配置必须是有限正数")
+        rag_settings = replace(settings, ai_provider="coze_deploy",
+                               coze_deploy_url=settings.rag_deploy_url,
+                               coze_project_id=settings.rag_project_id,
+                               coze_api_token=settings.rag_api_token,
+                               coze_timeout_seconds=max(settings.coze_timeout_seconds, 120.0),
+                               coze_read_timeout_seconds=max(settings.coze_read_timeout_seconds, 60.0))
         return CozeDeployClient(rag_settings, http=http)
     except ValueError:
         # 不回显配置值，避免 URL、项目 ID 等误填令牌时泄露。

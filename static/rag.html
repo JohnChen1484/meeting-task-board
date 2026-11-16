@@ -36,6 +36,16 @@
   .msg.info { background: #eef2ff; color: var(--primary-dark); }
   .msg.error { background: #fef2f2; color: var(--danger); }
   #answer { white-space: pre-wrap; overflow-wrap: anywhere; line-height: 1.8; }
+  .status-badge { display: inline-block; padding: 4px 9px; margin-bottom: 12px; border-radius: 6px;
+                  background: #eef2ff; color: var(--primary-dark); font-size: 12px; }
+  .status-badge.warning { background: #fef2f2; color: var(--danger); }
+  .status-badge[hidden] { display: none; }
+  #verificationHint { margin: 0 0 12px; }
+  #sourcesPanel { margin-top: 16px; border-top: 1px solid var(--line); padding-top: 12px; }
+  #sourcesPanel h3 { margin: 0 0 8px; font-size: 14px; }
+  #sources { margin: 0; padding-left: 20px; line-height: 1.8; overflow-wrap: anywhere; }
+  .source-status.warning { color: var(--danger); }
+  #rewrittenQuestion { margin-top: 12px; overflow-wrap: anywhere; }
   #elapsed { margin-top: 12px; }
   textarea:focus-visible, button:focus-visible, a:focus-visible { outline: 2px solid var(--primary); outline-offset: 2px; }
   @media (max-width: 600px) { main { padding: 12px; } header, .page-nav { padding-left: 16px; padding-right: 16px; } }
@@ -60,20 +70,33 @@
     <div class="examples" aria-label="示例问题">
       <span class="hint">试试这些问题</span>
       <button type="button" class="example">婚假有几天？</button>
-      <button type="button" class="example">我累计工作满 3 年，在本公司工作满 2 年，现在每年一共有几天年假？</button>
-      <button type="button" class="example">听说青禾会议助手所有版本都永久免费，是真的吗？</button>
+      <button type="button" class="example">上限是多少？</button>
+      <button type="button" class="example">报销制度里打车每公里最多报多少钱？</button>
+      <button type="button" class="example">公司有哪些假期？</button>
       <button type="button" class="example">公司的股票代码是多少？</button>
     </div>
   </section>
   <section id="answerPanel" class="panel" aria-live="polite" hidden>
     <h2>知识库回答</h2>
+    <div id="statusBadge" class="status-badge" hidden></div>
+    <div id="verificationHint" class="msg error" hidden></div>
     <div id="answer"></div>
+    <section id="sourcesPanel" hidden>
+      <h3>出处</h3>
+      <ul id="sources"></ul>
+    </section>
+    <div id="rewrittenQuestion" class="hint" hidden></div>
     <div id="elapsed"></div>
   </section>
 </main>
 <script>
 const $ = (id) => document.getElementById(id);
 const exampleButtons = Array.from(document.querySelectorAll('.example'));
+const statusLabels = {
+  answered: '已回答', partial: '部分回答', not_found: '知识库未找到', clarify: '需要补充信息',
+  unverified: '未能核实', chitchat: '非知识库问题', refused: '已拒绝', error: '出错',
+};
+const verificationHint = '（提示：以下回答中有内容未能在知识库原文中核实，请以原文为准。）';
 let querying = false;
 
 function formatAnswer(text) {
@@ -88,6 +111,51 @@ function showMessage(type, text) {
   $('queryMsg').hidden = false;
 }
 
+function renderSources(sources) {
+  $('sources').replaceChildren();
+  const items = Array.isArray(sources) ? sources.filter(source => source &&
+    typeof source.file === 'string' && source.file.trim()).slice(0, 10) : [];
+  items.forEach(source => {
+    const item = document.createElement('li');
+    const title = document.createElement('span');
+    const section = typeof source.section === 'string' ? source.section : '';
+    title.textContent = `《${source.file}》${section ? ' · ' + section : ''}`;
+    item.appendChild(title);
+    if (typeof source.status === 'string' && source.status) {
+      const status = document.createElement('span');
+      status.className = source.status === '已废止' ? 'source-status warning' : 'source-status';
+      status.textContent = ' · ' + source.status;
+      item.appendChild(status);
+    }
+    if (typeof source.score === 'number' && Number.isFinite(source.score)) {
+      const score = document.createElement('span');
+      score.textContent = ` · 相似度：${source.score.toFixed(2)}`;
+      item.appendChild(score);
+    }
+    $('sources').appendChild(item);
+  });
+  $('sourcesPanel').hidden = items.length === 0;
+}
+
+function renderAnswer(data, question) {
+  const label = Object.prototype.hasOwnProperty.call(statusLabels, data.status) ? statusLabels[data.status] : '';
+  $('statusBadge').textContent = label;
+  $('statusBadge').hidden = !label;
+  $('statusBadge').className = data.status === 'unverified' ? 'status-badge warning' : 'status-badge';
+  let answer = data.answer;
+  $('verificationHint').hidden = data.status !== 'unverified';
+  $('verificationHint').textContent = data.status === 'unverified' ? verificationHint : '';
+  if (data.status === 'unverified' && answer.trimStart().startsWith(verificationHint)) {
+    answer = answer.trimStart().slice(verificationHint.length).trimStart();
+  }
+  $('answer').innerHTML = formatAnswer(answer);
+  renderSources(data.sources);
+  const rewritten = typeof data.rewritten_query === 'string' ? data.rewritten_query : '';
+  $('rewrittenQuestion').hidden = !rewritten.trim() || rewritten === question;
+  $('rewrittenQuestion').textContent = rewritten.trim() && rewritten !== question ? '系统理解的问题：' + rewritten : '';
+  $('elapsed').textContent = `耗时：${data.elapsed_seconds.toFixed(2)} 秒`;
+}
+
 async function askQuestion() {
   if (querying) return;
   const question = $('question').value.trim();
@@ -100,7 +168,11 @@ async function askQuestion() {
   $('answerPanel').hidden = true;
   $('answer').textContent = '';
   $('elapsed').textContent = '';
-  showMessage('info', '正在查询知识库…');
+  let waitedSeconds = 0;
+  let focusQuestion = false;
+  const showWaiting = () => showMessage('info', `正在检索并核对答案，通常需要 5–25 秒… 已等待 ${waitedSeconds} 秒`);
+  showWaiting();
+  const waitTimer = setInterval(() => { waitedSeconds += 1; showWaiting(); }, 1000);
   try {
     const response = await fetch('/api/rag/ask', {
       method: 'POST', headers: { 'Content-Type': 'application/json' },
@@ -113,17 +185,19 @@ async function askQuestion() {
         typeof data.elapsed_seconds !== 'number' || !Number.isFinite(data.elapsed_seconds)) {
       throw new Error('知识库返回内容异常，请稍后重试');
     }
-    $('answer').innerHTML = formatAnswer(data.answer);
-    $('elapsed').textContent = `耗时：${data.elapsed_seconds.toFixed(2)} 秒`;
+    renderAnswer(data, question);
+    focusQuestion = data.status === 'clarify';
     $('answerPanel').hidden = false;
     $('queryMsg').hidden = true;
   } catch (error) {
     showMessage('error', error instanceof TypeError ? '无法连接服务，请检查网络或本地服务是否启动' : error.message);
   } finally {
+    clearInterval(waitTimer);
     querying = false;
     $('btnAsk').disabled = false;
     $('question').disabled = false;
     exampleButtons.forEach(button => { button.disabled = false; });
+    if (focusQuestion) $('question').focus();
   }
 }
 

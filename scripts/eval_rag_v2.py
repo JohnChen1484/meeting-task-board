@@ -30,10 +30,11 @@ DEFAULT_EVAL_SET = ROOT / "rag" / "eval" / "rag_eval_set_v2.json"
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
+from app.rag_answer import split_structured
+
 DEPRECATED_TITLE = "员工考勤与休假制度（v1）"
 STATUS_OK = {"answered": {"answered"}, "partial": {"partial", "answered"},
              "not_found": {"not_found"}, "clarify": {"clarify"}}
-JSON_BLOCK = re.compile(r"```json\s*(\{.*?\})\s*```", re.S)
 KB_DOCS = ROOT / "rag" / "kb_docs_md"
 
 
@@ -98,19 +99,6 @@ def select_cases(cases, only=None, limit=None):
             raise ValueError("--limit 必须大于 0")
         cases = cases[:limit]
     return cases
-
-
-def split_structured(answer: str):
-    """拆出回答正文与末尾的结构化 JSON（没有或解析失败时返回 None）。"""
-    matches = list(JSON_BLOCK.finditer(answer or ""))
-    if not matches:
-        return answer or "", None
-    last = matches[-1]
-    try:
-        data = json.loads(last.group(1))
-    except json.JSONDecodeError:
-        return answer, None
-    return (answer[:last.start()] + answer[last.end():]).strip(), data if isinstance(data, dict) else None
 
 
 def evaluate_answer(case: dict, answer: str) -> list[dict]:
