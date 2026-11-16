@@ -20,7 +20,7 @@ from pydantic import BaseModel, Field, field_validator
 
 from .ai_client import AIClient, AIParseError, AITimeoutError, build_client
 from .config import BASE_DIR, Settings
-from .db import STATUSES, TaskDB, DuplicateBatchError
+from .db import STATUSES, TaskDB, DuplicateBatchError, DuplicateMeetingError, UnknownExtractionError
 from .validation import TaskRules
 from .errors import safe_error
 
@@ -96,6 +96,8 @@ class SaveRequest(BaseModel):
 
     meeting_text: str = ""
     tasks: List[TaskIn]
+    # 同一份会议记录已保存过时，用户在前端确认“仍要保存”后才置为 True。
+    force: bool = False
 
 
 class TaskPatch(TaskRules):
@@ -175,8 +177,11 @@ def create_app(settings: Optional[Settings] = None, ai_client: Optional[AIClient
                      for key in ("chat_id", "conversation_id", "session_id")}
             return JSONResponse(status_code=code, content={"detail": detail, **trace})
         record_call(True)
+        extraction_id = str(uuid4())
+        # 服务端登记批次（批次号 + 会议记录指纹 + 任务摘要），保存时据此校验和去重。
+        app.state.db.create_pending(extraction_id, req.meeting_text, result.tasks)
         return {
-            "extraction_id": str(uuid4()),
+            "extraction_id": extraction_id,
             "session_id": result.session_id,
             "chat_id": result.chat_id,
             "conversation_id": result.conversation_id,
@@ -191,11 +196,17 @@ def create_app(settings: Optional[Settings] = None, ai_client: Optional[AIClient
         """用户确认后批量保存。"""
         if not req.tasks:
             raise HTTPException(status_code=400, detail="没有可保存的任务")
-        source = req.meeting_text.strip().replace("\n", " ")[:50]
         try:
-            saved = app.state.db.add_many([t.model_dump() for t in req.tasks], source, str(req.extraction_id), req.chat_id or "")
+            saved = app.state.db.add_many([t.model_dump() for t in req.tasks], str(req.extraction_id),
+                                          req.chat_id or "", force=req.force)
+        except UnknownExtractionError:
+            raise HTTPException(status_code=404, detail="提取批次不存在或已过期，请重新提取") from None
         except DuplicateBatchError:
             raise HTTPException(status_code=409, detail="这批任务已保存过") from None
+        except DuplicateMeetingError as e:
+            return JSONResponse(status_code=409, content={
+                "detail": f"这份会议记录已于 {e.saved_at.replace('T', ' ')} 保存过（{e.saved_count} 个任务），确认要再保存一次吗？",
+                "code": "duplicate_meeting", "saved_at": e.saved_at, "saved_count": e.saved_count})
         logger.info("saved %d tasks", len(saved))
         return {"saved": len(saved), "tasks": saved}
 

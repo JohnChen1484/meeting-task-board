@@ -127,6 +127,40 @@ let previewTasks = [];
 let lastMeetingText = "";
 let extractionId = null;
 let lastChatId = null;
+const PENDING_KEY = "mtb.pendingPreview";
+
+// ---------- 刷新后恢复未保存的预览 ----------
+// 只是方便用户；是否重复保存由服务端 pending_extractions 判定，不依赖这里。
+function persistPreview() {
+  try {
+    if (!extractionId) { sessionStorage.removeItem(PENDING_KEY); return; }
+    sessionStorage.setItem(PENDING_KEY, JSON.stringify({
+      extractionId, lastChatId, lastMeetingText, previewTasks,
+      summary: $("summary").textContent || "", warnings: $("parseWarnings").textContent || "",
+    }));
+  } catch (_) {}
+}
+function clearPersistedPreview() {
+  try { sessionStorage.removeItem(PENDING_KEY); } catch (_) {}
+}
+function restorePreview() {
+  let saved = null;
+  try { saved = JSON.parse(sessionStorage.getItem(PENDING_KEY) || "null"); } catch (_) { saved = null; }
+  if (!saved || !saved.extractionId || !Array.isArray(saved.previewTasks)) return false;
+  extractionId = saved.extractionId;
+  lastChatId = saved.lastChatId || null;
+  lastMeetingText = saved.lastMeetingText || "";
+  previewTasks = saved.previewTasks;
+  $("meeting").value = lastMeetingText;
+  $("summary").textContent = saved.summary || "（无纪要内容）";
+  $("parseWarnings").textContent = saved.warnings || "";
+  $("parseWarnings").hidden = !saved.warnings;
+  $("previewBox").style.display = "block";
+  $("taskSection").style.display = previewTasks.length ? "block" : "none";
+  renderPreview();
+  showMsg("extractMsg", "info", "已恢复刷新前未保存的提取结果，请核对后保存。");
+  return true;
+}
 
 // ---------- 工具函数 ----------
 function el(tag, attrs = {}, ...children) {
@@ -155,6 +189,7 @@ async function api(method, url, body) {
     if (Array.isArray(detail)) detail = detail.map((d) => d.msg).join("；");
     const error = new Error(detail || `请求失败（HTTP ${resp.status}）`);
     error.status = resp.status;
+    error.code = data && data.code;
     throw error;
   }
   return data;
@@ -170,6 +205,7 @@ async function extract() {
   $("previewBox").style.display = "none";
   extractionId = null;
   lastChatId = null;
+  clearPersistedPreview();
   try {
     const data = await api("POST", "/api/extract", { meeting_text: text });
     lastMeetingText = text;
@@ -212,6 +248,7 @@ function renderPreview() {
       inp.addEventListener("input", () => {
         t[key] = inp.value;
         inp.classList.toggle("unknown", isUnknown(inp.value));
+        persistPreview();
       });
       return inp;
     };
@@ -229,6 +266,7 @@ function renderPreview() {
     ));
   });
   $("btnSave").disabled = previewTasks.length === 0 || !extractionId;
+  persistPreview();
 }
 
 function addRow() {
@@ -236,25 +274,37 @@ function addRow() {
   renderPreview();
 }
 
-async function save() {
+function resetPreview() {
+  previewTasks = [];
+  extractionId = null;
+  lastChatId = null;
+  $("previewBox").style.display = "none";
+  clearPersistedPreview();
+}
+
+async function save(force = false) {
   if (!extractionId) { showMsg("saveMsg", "error", "请先重新提取任务"); return; }
   const tasks = previewTasks.filter((t) => t.task && t.task.trim());
   if (!tasks.length) { showMsg("saveMsg", "error", "没有可保存的任务"); return; }
   $("btnSave").disabled = true;
   try {
-    const data = await api("POST", "/api/tasks", { extraction_id: extractionId, chat_id: lastChatId, meeting_text: lastMeetingText, tasks });
+    const body = { extraction_id: extractionId, chat_id: lastChatId, meeting_text: lastMeetingText, tasks };
+    if (force) body.force = true;
+    const data = await api("POST", "/api/tasks", body);
     showMsg("extractMsg", "ok", `已保存 ${data.saved} 个任务到看板。`);
-    $("previewBox").style.display = "none";
-    previewTasks = [];
-    extractionId = null;
-    lastChatId = null;
+    resetPreview();
     await loadBoard();
   } catch (e) {
-    if (e.status === 409) {
-      extractionId = null;
-      lastChatId = null;
-      previewTasks = [];
-      $("previewBox").style.display = "none";
+    if (e.status === 409 && e.code === "duplicate_meeting") {
+      // 同一份会议记录已保存过：由用户决定是否再存一次，预览保留。
+      const ok = typeof confirm === "function" && confirm(e.message);
+      if (ok) { await save(true); return; }
+      showMsg("saveMsg", "info", "已取消保存：这份会议记录之前保存过。");
+      $("btnSave").disabled = false;
+      return;
+    }
+    if (e.status === 409 || e.status === 404) {
+      resetPreview();
       showMsg("extractMsg", "error", e.message);
       await loadBoard();
       return;
@@ -347,10 +397,11 @@ async function refreshProvider() {
 async function init() {
   await refreshProvider();
   $("btnExtract").onclick = extract;
-  $("btnClear").onclick = () => { $("meeting").value = ""; previewTasks = []; extractionId = null; lastChatId = null; $("previewBox").style.display = "none"; hideMsg("extractMsg"); };
+  $("btnClear").onclick = () => { $("meeting").value = ""; resetPreview(); hideMsg("extractMsg"); };
   $("btnAddRow").onclick = addRow;
   $("btnSave").onclick = save;
-  $("btnDiscard").onclick = () => { previewTasks = []; extractionId = null; lastChatId = null; $("previewBox").style.display = "none"; hideMsg("extractMsg"); };
+  $("btnDiscard").onclick = () => { resetPreview(); hideMsg("extractMsg"); };
+  restorePreview();
   loadBoard();
 }
 init();

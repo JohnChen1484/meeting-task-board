@@ -167,3 +167,79 @@ def test_new_preview_clears_old_warnings(js):
     run(js,'await extract();')
     assert js.eval('nodes.parseWarnings.hidden') is True
     assert js.eval('nodes.parseWarnings.textContent')==''
+
+
+STORAGE = r'''
+globalThis.store={};
+globalThis.sessionStorage={getItem:(k)=>k in store?store[k]:null,setItem:(k,v)=>{store[k]=String(v);},removeItem:(k)=>{delete store[k];}};
+'''
+
+
+def fresh_page(storage_json=None):
+    """模拟刷新：新的 JS 上下文，只保留 sessionStorage 内容。"""
+    ctx = quickjs.Context()
+    ctx.eval(BOOT)
+    ctx.eval(STORAGE)
+    if storage_json is not None:
+        ctx.eval(f"store={storage_json};")
+    ctx.eval(SCRIPT.rsplit('init();', 1)[0])
+    return ctx
+
+
+def test_refresh_restores_unsaved_preview_with_same_batch():
+    page = fresh_page()
+    page.eval("nodes.meeting=new Node();nodes.meeting.value='测试会议';")
+    run(page, 'await extract();')
+    page.eval("previewTasks[0].owner='李娜';persistPreview();")
+    stored = page.eval('JSON.stringify(store)')
+    reloaded = fresh_page(stored)
+    run(reloaded, 'await init();')
+    assert reloaded.eval('extractionId') == '11111111-1111-4111-8111-111111111111'
+    assert reloaded.eval('previewTasks[0].owner') == '李娜'
+    assert reloaded.eval('nodes.meeting.value') == '测试会议'
+    assert reloaded.eval('nodes.previewBox.style.display') == 'block'
+    assert '已恢复' in reloaded.eval('nodes.extractMsg.textContent')
+    run(reloaded, 'await save();')
+    body = json.loads(reloaded.eval("JSON.stringify(calls.find(c=>c.url==='/api/tasks'&&c.method==='POST').body)"))
+    assert body['extraction_id'] == '11111111-1111-4111-8111-111111111111'
+    assert reloaded.eval('JSON.stringify(store)') == '{}'  # 保存成功后清除暂存
+
+
+DUPLICATE_FETCH = r'''
+let dupAnswered=false;
+fetch=async function(url, options){
+  calls.push({url,method:options.method,body:options.body?JSON.parse(options.body):null});
+  if(url==='/api/tasks'&&options.method==='POST'){
+    const b=JSON.parse(options.body);
+    if(!b.force) return {ok:false,status:409,json:async()=>({detail:'这份会议记录已于 2026-11-14 10:00:00 保存过（2 个任务），确认要再保存一次吗？',code:'duplicate_meeting'})};
+    return {ok:true,status:200,json:async()=>({saved:1})};
+  }
+  if(url==='/api/health') return {ok:true,status:200,json:async()=>health};
+  return {ok:true,status:200,json:async()=>({tasks:[]})};
+};
+'''
+
+
+@pytest.mark.parametrize('answer', [True, False])
+def test_duplicate_meeting_asks_user(answer):
+    page = fresh_page()
+    page.eval(DUPLICATE_FETCH)
+    page.eval(f"globalThis.confirm=(m)=>{{globalThis.asked=m;return {str(answer).lower()};}};")
+    page.eval("extractionId='batch';previewTasks=[{task:'任务'}];")
+    run(page, 'await save();')
+    assert '确认要再保存一次吗' in page.eval('asked')
+    posts = json.loads(page.eval("JSON.stringify(calls.filter(c=>c.url==='/api/tasks'&&c.method==='POST').map(c=>c.body.force||false))"))
+    if answer:
+        assert posts == [False, True]
+        assert page.eval('extractionId') is None
+    else:
+        assert posts == [False]
+        assert page.eval('extractionId') == 'batch'  # 取消时保留预览，可修改后再决定
+        assert page.eval('nodes.btnSave.disabled') is False
+
+
+def test_unknown_batch_404_resets_preview(js):
+    js.eval("extractionId='forged';previewTasks=[{task:'任务'}];saveCode=404;")
+    run(js, 'await save();')
+    assert js.eval('extractionId') is None
+    assert js.eval('nodes.previewBox.style.display') == 'none'

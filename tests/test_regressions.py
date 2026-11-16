@@ -14,13 +14,24 @@ from app.main import create_app
 from tests.test_api import FakeAI, TASKS
 
 
+def ensure_pending(client, batch):
+    """登记服务端批次；并发或多个客户端重复登记同一批次时忽略。"""
+    try:
+        client.app.state.db.create_pending(str(UUID(batch)), "会议 " + batch.lower(), TASKS)
+    except sqlite3.IntegrityError:
+        pass
+
+
 @pytest.fixture
 def client(tmp_path):
     return TestClient(create_app(Settings(db_path=str(tmp_path/'audit.db')), FakeAI()))
 
 
-def save(client, tasks=None, batch=None):
-    return client.post('/api/tasks', json={'extraction_id': batch or str(uuid4()), 'tasks': tasks if tasks is not None else TASKS})
+def save(client, tasks=None, batch=None, register=True):
+    batch = batch or str(uuid4())
+    if register:
+        ensure_pending(client, batch)
+    return client.post('/api/tasks', json={'extraction_id': batch, 'tasks': tasks if tasks is not None else TASKS})
 
 
 @pytest.mark.parametrize('text', ['据报道', '新闻项目例会', '中午吃啥', '普通会议', '无行动项'])
@@ -105,6 +116,7 @@ def test_concurrent_duplicate_is_atomic(tmp_path, memory):
     c1 = TestClient(app)
     c2 = TestClient(app if memory else create_app(Settings(db_path=path), FakeAI()))
     batch = str(uuid4())
+    ensure_pending(c1, batch)
     with ThreadPoolExecutor(max_workers=2) as pool:
         results = list(pool.map(lambda c: save(c, batch=batch).status_code, [c1,c2]))
     assert sorted(results) == [200,409]
@@ -114,10 +126,12 @@ def test_concurrent_duplicate_is_atomic(tmp_path, memory):
 def test_db_batch_and_tasks_rollback(tmp_path):
     db = TaskDB(str(tmp_path/'rollback.db'))
     batch = str(uuid4())
+    db.create_pending(batch, '测试', TASKS)
     with pytest.raises(sqlite3.IntegrityError):
-        db.add_many([TASKS[0], dict(TASKS[1], task=None)], '测试', batch)
+        db.add_many([TASKS[0], dict(TASKS[1], task=None)], batch)
     assert db.list() == []
-    assert len(db.add_many(TASKS, '测试', batch)) == 2
+    # 失败回滚后批次仍是 pending，可以重试。
+    assert len(db.add_many(TASKS, batch)) == 2
 
 
 @pytest.mark.parametrize('tasks,code', [([],400),([{'task':' '}],422),([{'owner':'x'}],422),([{'task':'ok'},{'task':''}],422)])

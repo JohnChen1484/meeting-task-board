@@ -24,7 +24,9 @@ if str(ROOT) not in sys.path:
 
 MAX_CALLS = 10
 FIELDS = {"task", "owner", "due_date", "priority"}
-OPS = {"exists", "equals", "not_equals", "contains_all", "all_equals", "count_equals"}
+OPS = {"exists", "equals", "not_equals", "contains_all", "all_equals", "count_equals",
+       # 语义场景补充：被推翻/未定论的内容不应成为任务；长会议允许数量浮动；负责人可有多个合理写法。
+       "not_exists", "count_between", "field_in"}
 
 
 @dataclass
@@ -55,15 +57,27 @@ def validate_cases(cases):
             if op == "count_equals":
                 if type(rule.get("value")) is not int or rule["value"] < 0:
                     raise ValueError("任务数量必须是非负整数")
+            elif op == "count_between":
+                value = rule.get("value")
+                if (not isinstance(value, list) or len(value) != 2 or not all(type(v) is int and v >= 0 for v in value)
+                        or value[0] > value[1]):
+                    raise ValueError("count_between 的 value 必须是 [最小值, 最大值] 两个非负整数")
+                words = rule.get("keywords")
+                if words is not None and (not isinstance(words, list) or not words
+                                          or not all(isinstance(w, str) and w for w in words)):
+                    raise ValueError("count_between 的 keywords 如果提供，必须是非空文本数组")
             elif op != "all_equals":
                 words = rule.get("keywords")
                 if not isinstance(words, list) or not words or not all(isinstance(w, str) and w for w in words):
                     raise ValueError("任务选择器需要非空 keywords 数组")
-            if op not in ("exists", "count_equals"):
+            if op not in ("exists", "count_equals", "not_exists", "count_between"):
                 if rule.get("field") not in FIELDS:
                     raise ValueError("检查项字段不合法")
                 value = rule.get("value")
-                if op == "contains_all":
+                if op == "field_in":
+                    if not isinstance(value, list) or not value or not all(isinstance(v, str) and v for v in value):
+                        raise ValueError("field_in 的 value 必须是非空文本数组")
+                elif op == "contains_all":
                     if not isinstance(value, list) or not value or not all(isinstance(v, str) and v for v in value):
                         raise ValueError("contains_all 的 value 必须是非空文本数组")
                 elif not isinstance(value, str):
@@ -76,17 +90,27 @@ def evaluate_check(tasks, rule):
     op = rule["op"]
     if op == "count_equals":
         return CheckResult(rule["description"], len(tasks) == rule["value"], len(tasks))
+    if op == "count_between":
+        pool = tasks if not rule.get("keywords") else [
+            t for t in tasks if any(k in t.get("task", "") for k in rule["keywords"])
+        ]
+        low, high = rule["value"]
+        return CheckResult(rule["description"], low <= len(pool) <= high, len(pool))
     selected = tasks if op == "all_equals" else [
         t for t in tasks if any(k in t.get("task", "") for k in rule["keywords"])
     ]
     if op == "exists":
         return CheckResult(rule["description"], bool(selected), [t.get("task") for t in selected])
+    if op == "not_exists":
+        return CheckResult(rule["description"], not selected, [t.get("task") for t in selected])
     actual = [t.get(rule["field"]) for t in selected]
     expected = rule["value"]
     if op == "not_equals":
         passed = bool(actual) and all(isinstance(v, str) and v != expected for v in actual)
     elif op == "contains_all":
         passed = bool(actual) and all(isinstance(v, str) and all(word in v for word in expected) for v in actual)
+    elif op == "field_in":
+        passed = bool(actual) and all(v in expected for v in actual)
     else:
         passed = bool(actual) and all(v == expected for v in actual)
     return CheckResult(rule["description"], passed, actual)

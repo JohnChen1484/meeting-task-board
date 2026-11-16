@@ -28,6 +28,13 @@ TASKS = [
 ]
 
 
+def issue(client, meeting_text=None, tasks=TASKS):
+    """模拟 /api/extract 的服务端登记，返回批次号；默认每次用不同的会议记录。"""
+    extraction_id = str(uuid4())
+    client.app.state.db.create_pending(extraction_id, meeting_text or "会议 " + extraction_id, tasks)
+    return extraction_id
+
+
 def make_client(tmp_path, ai):
     settings = Settings(ai_provider="mock", db_path=str(tmp_path / "test.db"))
     return TestClient(create_app(settings=settings, ai_client=ai))
@@ -61,8 +68,9 @@ def test_extract_rejects_empty_text(tmp_path):
 
 
 def test_save_sets_status_by_owner(tmp_path):
-    client = make_client(tmp_path, FakeAI())
-    r = client.post("/api/tasks", json={"extraction_id": str(uuid4()), "meeting_text": "项目例会，2026年10月28日……", "tasks": TASKS})
+    client = make_client(tmp_path, FakeAI(ExtractResult(summary="纪要", tasks=TASKS)))
+    batch = client.post("/api/extract", json={"meeting_text": "项目例会，2026年10月28日……"}).json()["extraction_id"]
+    r = client.post("/api/tasks", json={"extraction_id": batch, "meeting_text": "前端传来的文本不作为来源", "tasks": TASKS})
     assert r.status_code == 200 and r.json()["saved"] == 2
     by_task = {t["task"]: t for t in client.get("/api/tasks").json()["tasks"]}
     assert by_task["完成首轮客户回访"]["status"] == "待开始"
@@ -72,7 +80,7 @@ def test_save_sets_status_by_owner(tmp_path):
 
 def test_list_filter_and_patch(tmp_path):
     client = make_client(tmp_path, FakeAI())
-    client.post("/api/tasks", json={"extraction_id": str(uuid4()), "meeting_text": "m", "tasks": TASKS})
+    client.post("/api/tasks", json={"extraction_id": issue(client), "meeting_text": "m", "tasks": TASKS})
     pending = client.get("/api/tasks", params={"status": "待分配"}).json()["tasks"]
     assert len(pending) == 1
     tid = pending[0]["id"]

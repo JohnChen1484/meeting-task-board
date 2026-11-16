@@ -209,3 +209,83 @@ def test_live_config_rejected_before_token_read(tmp_path,monkeypatch,key,value):
     monkeypatch.setattr(evaluator.getpass,'getpass',lambda _:pytest.fail('配置错误时不得索取令牌'))
     monkeypatch.setattr('app.ai_client.CozeClient',lambda *_:pytest.fail('不得创建客户端'))
     assert evaluator.main(['--live','--output-dir',str(tmp_path)])==2
+
+
+SEMANTIC=Path(__file__).parent/'cases/eval_cases_semantic.json'
+
+
+def ideal_semantic_tasks():
+    """按语义正确理解时应得到的输出（离线模拟），用来证明用例和检查项本身自洽。"""
+    return [
+        [{'task':'客户流失分析报告','owner':'陈晨','due_date':'2026-11-20'},
+         {'task':'Q4 数据看板上线','owner':'李娜','due_date':'2026-11-18'},
+         {'task':'整理用户访谈纪要','owner':'刘洋、陈晨'},
+         {'task':'提交双十二活动预热方案','owner':'市场部','due_date':'2026-12-05'},
+         {'task':'测试工程师招聘到岗','owner':'赵敏','due_date':'2026-11-30'},
+         {'task':'与财务确认 Q4 预算','owner':'王磊','due_date':'2026-11-11'}],
+        [{'task':'App 首页改版上线','owner':'刘洋','due_date':'2026-11-25'},
+         {'task':'修复支付回调问题','owner':'陈晨','due_date':'2026-11-09','priority':'高'},
+         {'task':'与法务确认合同条款','owner':'王磊','due_date':'2026-11-13'},
+         {'task':'重做新员工培训方案','owner':'赵敏','due_date':'2026-11-18'}],
+        [{'task':'报表系统上线','owner':'陈晨','due_date':'2026-11-20'},
+         {'task':'排查测试环境故障','owner':'刘洋','due_date':'2026-11-09','priority':'高'},
+         {'task':'需求文档交接给陈晨','owner':'李娜','due_date':'2026-11-11'}],
+        [{'task':'撰写双十一复盘报告','owner':'陈晨','due_date':'2026-11-13'},
+         {'task':'官网备案续期','owner':'刘洋','due_date':'2026-11-16'},
+         {'task':'更新直播间话术','owner':'赵敏','due_date':'2026-11-30'}],
+        [{'task':'预订发布会场地'},{'task':'排查客户投诉的导出 bug'},
+         {'task':'修改周报模板','due_date':'2026-11-13'}],
+        [{'task':'更新演示 PPT'},{'task':'检查演示环境','owner':'刘洋','due_date':'2026-11-16'},
+         {'task':'整理客户回访名单'}],
+    ]
+
+
+def test_semantic_cases_are_valid_and_self_consistent():
+    cases=evaluator.validate_cases(json.loads(SEMANTIC.read_text()))
+    assert {c['name'].split('：')[0] for c in cases}=={'长会议','多人插话','无明确负责人'}
+    results=evaluator.run_cases(cases,OfflineAI(ideal_semantic_tasks()),lambda _:None)
+    failed=[(r['case']['id'] if 'case' in r else r.get('id'),c.description) for r in results for c in r['checks'] if not c.passed]
+    assert failed==[]
+
+
+def test_semantic_checks_catch_typical_mistakes():
+    tasks=ideal_semantic_tasks()
+    tasks[2][0]['owner']='李娜'                      # 没跟上改派
+    tasks[3].append({'task':'更换短信供应商'})          # 把“暂时不换”当成任务
+    tasks[0].append({'task':'看板上线时间确认','owner':'李娜'})  # 重复提及没合并
+    tasks[5][0]['owner']='李娜'                      # “收到”当成认领
+    cases=json.loads(SEMANTIC.read_text())
+    results=evaluator.run_cases(cases,OfflineAI(tasks),lambda _:None)
+    failed={c.description for r in results for c in r['checks'] if not c.passed}
+    assert '上线：owner=陈晨（李娜推掉后陈晨接手）' in failed
+    assert '短信供应商决定不换，不应成为任务' in failed
+    assert '看板前后提了两次，只能出现 1 条' in failed
+    assert 'PPT：owner=未明确（“收到”不算认领）' in failed
+
+
+def test_new_ops():
+    nx={'description':'不应出现','op':'not_exists','keywords':['扩容']}
+    assert evaluator.evaluate_check([{'task':'招聘'}],nx).passed
+    assert not evaluator.evaluate_check([{'task':'服务器扩容'}],nx).passed
+    cnt={'description':'数量','op':'count_between','value':[2,3]}
+    assert evaluator.evaluate_check([{'task':'a'},{'task':'b'}],cnt).passed
+    assert not evaluator.evaluate_check([{'task':'a'}],cnt).passed
+    sub={'description':'看板只一条','op':'count_between','keywords':['看板'],'value':[1,1]}
+    assert not evaluator.evaluate_check([{'task':'看板'},{'task':'看板复核'}],sub).passed
+    fin={'description':'负责人集合','op':'field_in','keywords':['导出'],'field':'owner','value':['未明确','李娜所在组']}
+    assert evaluator.evaluate_check([{'task':'导出 bug','owner':'未明确'}],fin).passed
+    assert not evaluator.evaluate_check([{'task':'导出 bug','owner':'李娜'}],fin).passed
+    assert not evaluator.evaluate_check([],fin).passed
+
+
+@pytest.mark.parametrize('rule',[
+    {'op':'count_between','description':'x','value':[3,1]},
+    {'op':'count_between','description':'x','value':[1]},
+    {'op':'count_between','description':'x','value':[1,2],'keywords':[]},
+    {'op':'field_in','description':'x','keywords':['a'],'field':'owner','value':[]},
+    {'op':'field_in','description':'x','keywords':['a'],'field':'secret','value':['a']},
+    {'op':'not_exists','description':'x','keywords':[]},
+])
+def test_new_ops_reject_bad_config(rule):
+    case={'id':1,'name':'n','meeting_text':'m','checks':[rule]}
+    with pytest.raises(ValueError):evaluator.validate_cases([case])

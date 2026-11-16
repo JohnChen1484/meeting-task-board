@@ -1,0 +1,526 @@
+[
+  {
+    "id": "S1",
+    "name": "长会议：多话题、重复提及需合并、未定论事项不列",
+    "meeting_text": "季度复盘会，会议日期：2026-11-09（周一）。参会：王磊（主持）、李娜、陈晨、赵敏、刘洋。\n\n王磊：今天主要过三件事：Q3 数据回顾、Q4 重点工作、招聘进度。先看数据。\n陈晨：Q3 整体营收比 Q2 涨了 12%，但老客户续费率掉了 5 个点，主要集中在中小客户。\n李娜：中小客户那块，竞品 8 月份降价了 20%，我们没跟。\n王磊：降价的事今天不定，先看清楚流失原因再说。陈晨，你牵头做一份客户流失分析报告，下周五前给我。\n陈晨：好的。\n王磊：第二件事，Q4 数据看板。管理层一直在催，李娜你那边进度怎么样？\n李娜：需求已经对齐了，开发大概还要一周多。\n王磊：那看板就由李娜负责，11 月 18 日前上线。\n李娜：可以。\n赵敏：插一句，招聘这边，测试工程师还缺 2 个，面试官时间排不过来。\n王磊：招聘的事一会儿专门说。先把 Q4 的事过完。\n刘洋：我补充一下，上个月做的用户访谈还有十几份录音没整理，产品那边在等结论。\n王磊：访谈纪要刘洋和陈晨一起整理，下次例会前给到产品。\n刘洋：没问题。\n王磊：市场部那边，双十二的活动预热方案要提前，12 月 5 日前交上来，我会跟市场部同步。\n李娜：服务器那边，运维提过要不要扩容。\n王磊：扩容先不做，等下季度流量数据出来再说。\n陈晨：好的，那我把这个记成待议。\n王磊：回到招聘。赵敏，2 个测试工程师月底前要到岗，面试官不够就找我协调。\n赵敏：明白，月底前到岗。\n王磊：最后，Q4 预算还没跟财务最终确认，这个我自己来，周三前确认完。\n李娜：对了，看板上线的时间还是 11 月 18 日吧？\n王磊：对，不变，还是你负责。\n王磊：就这些，散会。",
+    "checks": [
+      {
+        "op": "count_between",
+        "description": "任务数 6～7 条（6 个行动项，允许拆分 1 条）",
+        "value": [
+          6,
+          7
+        ]
+      },
+      {
+        "op": "count_between",
+        "description": "看板前后提了两次，只能出现 1 条",
+        "value": [
+          1,
+          1
+        ],
+        "keywords": [
+          "看板"
+        ]
+      },
+      {
+        "op": "equals",
+        "description": "看板：owner=李娜",
+        "keywords": [
+          "看板"
+        ],
+        "field": "owner",
+        "value": "李娜"
+      },
+      {
+        "op": "equals",
+        "description": "看板：due_date=2026-11-18",
+        "keywords": [
+          "看板"
+        ],
+        "field": "due_date",
+        "value": "2026-11-18"
+      },
+      {
+        "op": "equals",
+        "description": "流失分析：owner=陈晨",
+        "keywords": [
+          "流失"
+        ],
+        "field": "owner",
+        "value": "陈晨"
+      },
+      {
+        "op": "equals",
+        "description": "流失分析：due_date=2026-11-20（下周五）",
+        "keywords": [
+          "流失"
+        ],
+        "field": "due_date",
+        "value": "2026-11-20"
+      },
+      {
+        "op": "equals",
+        "description": "招聘：owner=赵敏",
+        "keywords": [
+          "招聘",
+          "测试工程师"
+        ],
+        "field": "owner",
+        "value": "赵敏"
+      },
+      {
+        "op": "equals",
+        "description": "招聘：due_date=2026-11-30（月底）",
+        "keywords": [
+          "招聘",
+          "测试工程师"
+        ],
+        "field": "due_date",
+        "value": "2026-11-30"
+      },
+      {
+        "op": "contains_all",
+        "description": "访谈纪要：负责人同时包含刘洋和陈晨",
+        "keywords": [
+          "访谈"
+        ],
+        "field": "owner",
+        "value": [
+          "刘洋",
+          "陈晨"
+        ]
+      },
+      {
+        "op": "equals",
+        "description": "访谈纪要：due_date=未明确（下次例会前）",
+        "keywords": [
+          "访谈"
+        ],
+        "field": "due_date",
+        "value": "未明确"
+      },
+      {
+        "op": "equals",
+        "description": "预热方案：owner=市场部",
+        "keywords": [
+          "预热",
+          "双十二"
+        ],
+        "field": "owner",
+        "value": "市场部"
+      },
+      {
+        "op": "equals",
+        "description": "预算：owner=王磊",
+        "keywords": [
+          "预算"
+        ],
+        "field": "owner",
+        "value": "王磊"
+      },
+      {
+        "op": "equals",
+        "description": "预算：due_date=2026-11-11（周三）",
+        "keywords": [
+          "预算"
+        ],
+        "field": "due_date",
+        "value": "2026-11-11"
+      },
+      {
+        "op": "not_exists",
+        "description": "扩容已决定不做，不应成为任务",
+        "keywords": [
+          "扩容"
+        ]
+      },
+      {
+        "op": "not_exists",
+        "description": "降价未定论，不应成为任务",
+        "keywords": [
+          "降价"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "S2",
+    "name": "长会议：远距离指代与后期改派",
+    "meeting_text": "产品周会，会议日期：2026-11-09（周一）。参会：王磊、李娜、陈晨、赵敏、刘洋。\n\n王磊：先说几件零散的事。新员工培训方案上次反馈很差，要重做，先记一下，等会儿再定谁来。\n王磊：App 首页改版，李娜负责，11 月 25 日前上线。\n李娜：好。\n陈晨：支付回调有个 bug，部分订单状态没更新，客户已经在投诉了。\n王磊：这个很急，陈晨你今天下班前修掉。\n陈晨：收到。\n赵敏：海外版的事要不要启动？有两家代理商在问。\n王磊：海外版今天不定，下次会上专门讨论。\n刘洋：上周说的埋点方案，数据组已经在做了，下周给初稿。\n王磊：好。另外合同模板法务提了修改意见，我周五前跟法务确认条款。\n李娜：我这边最近事情比较多，首页改版、两个客户项目都压在一起。\n王磊：那首页改版那个，改成刘洋做吧，时间不变。\n刘洋：可以，我接。\n王磊：还有刚才说的培训方案，赵敏来负责，下周三前出新版本。\n赵敏：好的。\n王磊：今天就到这。",
+    "checks": [
+      {
+        "op": "count_between",
+        "description": "任务数 4～5 条",
+        "value": [
+          4,
+          5
+        ]
+      },
+      {
+        "op": "equals",
+        "description": "培训方案：owner=赵敏（前面提出、后面才指派）",
+        "keywords": [
+          "培训"
+        ],
+        "field": "owner",
+        "value": "赵敏"
+      },
+      {
+        "op": "equals",
+        "description": "培训方案：due_date=2026-11-18（下周三）",
+        "keywords": [
+          "培训"
+        ],
+        "field": "due_date",
+        "value": "2026-11-18"
+      },
+      {
+        "op": "field_in",
+        "description": "首页改版：owner 以最后改派为准=刘洋",
+        "keywords": [
+          "首页"
+        ],
+        "field": "owner",
+        "value": [
+          "刘洋"
+        ]
+      },
+      {
+        "op": "equals",
+        "description": "首页改版：due_date=2026-11-25（时间不变）",
+        "keywords": [
+          "首页"
+        ],
+        "field": "due_date",
+        "value": "2026-11-25"
+      },
+      {
+        "op": "equals",
+        "description": "支付 bug：owner=陈晨",
+        "keywords": [
+          "支付",
+          "回调"
+        ],
+        "field": "owner",
+        "value": "陈晨"
+      },
+      {
+        "op": "equals",
+        "description": "支付 bug：due_date=2026-11-09（今天）",
+        "keywords": [
+          "支付",
+          "回调"
+        ],
+        "field": "due_date",
+        "value": "2026-11-09"
+      },
+      {
+        "op": "equals",
+        "description": "支付 bug：priority=高（原文“很急”）",
+        "keywords": [
+          "支付",
+          "回调"
+        ],
+        "field": "priority",
+        "value": "高"
+      },
+      {
+        "op": "equals",
+        "description": "合同条款：owner=王磊",
+        "keywords": [
+          "合同"
+        ],
+        "field": "owner",
+        "value": "王磊"
+      },
+      {
+        "op": "equals",
+        "description": "合同条款：due_date=2026-11-13（周五）",
+        "keywords": [
+          "合同"
+        ],
+        "field": "due_date",
+        "value": "2026-11-13"
+      },
+      {
+        "op": "not_exists",
+        "description": "海外版未定论，不应成为任务",
+        "keywords": [
+          "海外"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "S3",
+    "name": "多人插话：改派、改期、插入紧急事项",
+    "meeting_text": "项目例会，会议日期：2026-11-09（周一）。参会：王磊、李娜、陈晨、赵敏、刘洋。\n\n王磊：报表系统下周三上线吧，李娜负责。\n李娜：下周三我在外地出差，恐怕来不及。\n陈晨：那我来接，不过下周三太赶了，我下周五前上线。\n王磊：行，那就陈晨负责，下周五前上线。\n赵敏：插一句，测试环境这两天老是挂，影响我们联调。\n王磊：这个很急，刘洋今天下班前排查一下。\n刘洋：好的。\n王磊：回到刚才的事，李娜周三前把需求文档交接给陈晨。\n李娜：没问题。",
+    "checks": [
+      {
+        "op": "count_between",
+        "description": "任务数 3 条",
+        "value": [
+          3,
+          3
+        ]
+      },
+      {
+        "op": "equals",
+        "description": "上线：owner=陈晨（李娜推掉后陈晨接手）",
+        "keywords": [
+          "上线"
+        ],
+        "field": "owner",
+        "value": "陈晨"
+      },
+      {
+        "op": "equals",
+        "description": "上线：due_date=2026-11-20（改为下周五）",
+        "keywords": [
+          "上线"
+        ],
+        "field": "due_date",
+        "value": "2026-11-20"
+      },
+      {
+        "op": "equals",
+        "description": "测试环境：owner=刘洋",
+        "keywords": [
+          "测试环境"
+        ],
+        "field": "owner",
+        "value": "刘洋"
+      },
+      {
+        "op": "equals",
+        "description": "测试环境：due_date=2026-11-09（今天）",
+        "keywords": [
+          "测试环境"
+        ],
+        "field": "due_date",
+        "value": "2026-11-09"
+      },
+      {
+        "op": "equals",
+        "description": "测试环境：priority=高（原文“很急”）",
+        "keywords": [
+          "测试环境"
+        ],
+        "field": "priority",
+        "value": "高"
+      },
+      {
+        "op": "equals",
+        "description": "文档交接：owner=李娜",
+        "keywords": [
+          "交接"
+        ],
+        "field": "owner",
+        "value": "李娜"
+      },
+      {
+        "op": "equals",
+        "description": "文档交接：due_date=2026-11-11（本周三）",
+        "keywords": [
+          "交接"
+        ],
+        "field": "due_date",
+        "value": "2026-11-11"
+      }
+    ]
+  },
+  {
+    "id": "S4",
+    "name": "多人插话：认领后撤回、话题被打断",
+    "meeting_text": "运营周会，会议日期：2026-11-10（周二）。参会：王磊、李娜、陈晨、赵敏、刘洋。\n\n王磊：双十一的复盘报告谁来写？\n李娜：我来吧……等等，我周四要去客户那边，可能写不完。\n陈晨：那我写，周五前给。\n王磊：好。另外——\n刘洋：打断一下，官网的备案下周到期了，得赶紧续。\n王磊：对，刘洋你负责续备案，下周一前办完。我们接着说，直播间的话术需要更新，赵敏负责，月底前。\n赵敏：没问题。\n李娜：之前说要换短信供应商，还换吗？\n王磊：暂时不换了。",
+    "checks": [
+      {
+        "op": "count_between",
+        "description": "任务数 3 条",
+        "value": [
+          3,
+          3
+        ]
+      },
+      {
+        "op": "equals",
+        "description": "复盘报告：owner=陈晨（李娜认领后撤回）",
+        "keywords": [
+          "复盘"
+        ],
+        "field": "owner",
+        "value": "陈晨"
+      },
+      {
+        "op": "equals",
+        "description": "复盘报告：due_date=2026-11-13（本周五）",
+        "keywords": [
+          "复盘"
+        ],
+        "field": "due_date",
+        "value": "2026-11-13"
+      },
+      {
+        "op": "equals",
+        "description": "备案：owner=刘洋",
+        "keywords": [
+          "备案"
+        ],
+        "field": "owner",
+        "value": "刘洋"
+      },
+      {
+        "op": "equals",
+        "description": "备案：due_date=2026-11-16（下周一）",
+        "keywords": [
+          "备案"
+        ],
+        "field": "due_date",
+        "value": "2026-11-16"
+      },
+      {
+        "op": "equals",
+        "description": "话术：owner=赵敏",
+        "keywords": [
+          "话术"
+        ],
+        "field": "owner",
+        "value": "赵敏"
+      },
+      {
+        "op": "equals",
+        "description": "话术：due_date=2026-11-30（月底）",
+        "keywords": [
+          "话术"
+        ],
+        "field": "due_date",
+        "value": "2026-11-30"
+      },
+      {
+        "op": "not_exists",
+        "description": "短信供应商决定不换，不应成为任务",
+        "keywords": [
+          "短信"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "S5",
+    "name": "无明确负责人：无人认领、“我们组”、说话人不明",
+    "meeting_text": "项目例会，会议日期：2026-11-11（周三）。参会：王磊、李娜、陈晨、赵敏。\n\n王磊：发布会的场地还没订，这个谁跟一下？\n（无人回应）\n王磊：那先放着，回头找人。\n李娜：客户投诉的那个导出 bug，我们组看看。\n陈晨：竞品调研的事，大家有空都留意一下。\n（有人说）：周报模板我来改，周五前。\n赵敏：采购申请我上周已经提交了，等审批就行。",
+    "checks": [
+      {
+        "op": "count_between",
+        "description": "任务数 3～4 条（竞品“留意一下”可列可不列）",
+        "value": [
+          3,
+          4
+        ]
+      },
+      {
+        "op": "equals",
+        "description": "场地：owner=未明确（无人回应）",
+        "keywords": [
+          "场地"
+        ],
+        "field": "owner",
+        "value": "未明确"
+      },
+      {
+        "op": "field_in",
+        "description": "导出 bug：owner 不能凭空写成具体个人（人工复核）",
+        "keywords": [
+          "导出"
+        ],
+        "field": "owner",
+        "value": [
+          "未明确",
+          "李娜所在小组",
+          "李娜所在组",
+          "李娜团队",
+          "李娜所在团队",
+          "李娜小组"
+        ]
+      },
+      {
+        "op": "equals",
+        "description": "周报模板：owner=未明确（说话人不明）",
+        "keywords": [
+          "周报"
+        ],
+        "field": "owner",
+        "value": "未明确"
+      },
+      {
+        "op": "equals",
+        "description": "周报模板：due_date=2026-11-13（本周五）",
+        "keywords": [
+          "周报"
+        ],
+        "field": "due_date",
+        "value": "2026-11-13"
+      },
+      {
+        "op": "not_exists",
+        "description": "采购申请已提交，不是待办",
+        "keywords": [
+          "采购"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "S6",
+    "name": "无明确负责人：群聊中“收到”不等于认领",
+    "meeting_text": "【项目群聊记录，2026-11-12（周四）】\n王磊：@所有人 下周二给客户做演示，演示用的 PPT 需要有人更新一下\n李娜：收到\n陈晨：👍\n王磊：演示环境也要提前检查\n刘洋：环境我周一上午看\n王磊：还有演示后的客户回访名单，需要整理\n（之后无人回复）",
+    "checks": [
+      {
+        "op": "count_between",
+        "description": "任务数 3 条",
+        "value": [
+          3,
+          3
+        ]
+      },
+      {
+        "op": "equals",
+        "description": "PPT：owner=未明确（“收到”不算认领）",
+        "keywords": [
+          "PPT",
+          "演示文稿"
+        ],
+        "field": "owner",
+        "value": "未明确"
+      },
+      {
+        "op": "equals",
+        "description": "演示环境：owner=刘洋",
+        "keywords": [
+          "环境"
+        ],
+        "field": "owner",
+        "value": "刘洋"
+      },
+      {
+        "op": "equals",
+        "description": "演示环境：due_date=2026-11-16（下周一）",
+        "keywords": [
+          "环境"
+        ],
+        "field": "due_date",
+        "value": "2026-11-16"
+      },
+      {
+        "op": "equals",
+        "description": "回访名单：owner=未明确（无人回复）",
+        "keywords": [
+          "回访"
+        ],
+        "field": "owner",
+        "value": "未明确"
+      }
+    ]
+  }
+]
