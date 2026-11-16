@@ -45,6 +45,9 @@ class Settings:
     coze_retrieve_path: str = "/v3/chat/retrieve"
     coze_messages_path: str = "/v3/chat/message/list"
     coze_timeout_seconds: float = 90.0
+    # 流式读取的单次等待上限（两次收到数据之间）。先校验、后一次性输出的工作流，
+    # 长问题可能 20 秒以上没有任何字节，评测时需要放宽。
+    coze_read_timeout_seconds: float = 20.0
     db_path: str = str(BASE_DIR / "data" / "tasks.db")
 
     @classmethod
@@ -63,5 +66,6 @@ class Settings:
             coze_retrieve_path=os.getenv("COZE_RETRIEVE_PATH", "/v3/chat/retrieve").strip(),
             coze_messages_path=os.getenv("COZE_MESSAGES_PATH", "/v3/chat/message/list").strip(),
             coze_timeout_seconds=float(os.getenv("COZE_TIMEOUT_SECONDS", "90")),
+            coze_read_timeout_seconds=float(os.getenv("COZE_READ_TIMEOUT_SECONDS", "20")),
             db_path=db_path,
         )

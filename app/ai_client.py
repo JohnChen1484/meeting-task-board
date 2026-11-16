@@ -368,6 +368,9 @@ class CozeDeployClient:
         self.timeout = settings.coze_timeout_seconds
         if not math.isfinite(self.timeout) or self.timeout <= 0:
             raise ValueError("COZE_TIMEOUT_SECONDS 必须为正的有限秒数")
+        self.read_timeout = getattr(settings, "coze_read_timeout_seconds", 20.0)
+        if not math.isfinite(self.read_timeout) or self.read_timeout <= 0:
+            raise ValueError("COZE_READ_TIMEOUT_SECONDS 必须为正的有限秒数")
         self.token = settings.coze_api_token
         self._http = http or httpx.Client(timeout=20.0)
 
@@ -395,7 +398,7 @@ class CozeDeployClient:
                 with self._http.stream("POST", self.base + "/stream_run", json=body,
                                        headers={"Authorization": f"Bearer {self.token}",
                                                 "Content-Type": "application/json"},
-                                       timeout=min(20.0, remaining())) as response:
+                                       timeout=min(self.read_timeout, remaining())) as response:
                     if stop.is_set():
                         return
                     if on_status:

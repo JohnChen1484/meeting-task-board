@@ -194,6 +194,18 @@ def test_config_and_provider_factory(monkeypatch):
     c._http.close()
 
 
-@pytest.mark.parametrize('overrides',[{'coze_api_token':''},{'coze_project_id':None},{'coze_deploy_url':''},{'coze_timeout_seconds':float('nan')},{'coze_deploy_url':'https://deploy.example.invalid/stream_run'}])
+@pytest.mark.parametrize('overrides',[{'coze_api_token':''},{'coze_project_id':None},{'coze_deploy_url':''},{'coze_timeout_seconds':float('nan')},{'coze_read_timeout_seconds':0},{'coze_read_timeout_seconds':float('nan')},{'coze_deploy_url':'https://deploy.example.invalid/stream_run'}])
 def test_deploy_configuration_required(overrides):
     with pytest.raises(ValueError):CozeDeployClient(settings(**overrides))
+
+
+def test_read_timeout_is_configurable_and_used_per_stream():
+    seen={}
+    def handler(request):
+        seen['timeout']=request.extensions.get('timeout',{}).get('read')
+        return httpx.Response(200,stream=ByteStream([event('answer','ok'),event('message_end',None)]))
+    c=CozeDeployClient(settings(coze_read_timeout_seconds=60.0),http=httpx.Client(transport=httpx.MockTransport(handler)))
+    assert c.read_timeout==60.0
+    c.stream_run('q')
+    assert seen['timeout'] is not None and 59<seen['timeout']<=60
+    assert CozeDeployClient(settings()).read_timeout==20.0
