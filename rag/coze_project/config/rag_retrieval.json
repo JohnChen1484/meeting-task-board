@@ -1,0 +1,1 @@
+{"datasets": ["qinghe_kb"], "top_k": 6, "min_score": 0.0, "rewrite": true, "exclude_status": ["已废止"], "filter_stale": true, "max_context_chunks": 6, "list_max_context_chunks": 10}
