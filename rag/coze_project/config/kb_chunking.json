@@ -1,0 +1,29 @@
+{
+  "note": "切片策略配置：scripts/kb_import_files.py 只读这里。method=platform 交给平台按分隔符切；method=semantic 本地语义切片（不依赖分隔符），段落带「文档名｜章节｜状态」前缀；ocr=true 时没有文字层的扫描页先转写。改了参数，同一文件会按新版本重新导入。线上问答用的 qinghe_kb 由 scripts/import_kb.py 按条款切分，不受这里影响。",
+  "strategies": {
+    "A": {
+      "dataset": "qinghe_pdf_a", "dir": "assets/kb_files/pdf", "ext": ".pdf", "method": "platform",
+      "chunk": {"separator": "\n", "max_tokens": 500, "remove_extra_spaces": true, "remove_urls_emails": false}
+    },
+    "B": {
+      "dataset": "qinghe_pdf_b", "dir": "assets/kb_files/pdf", "ext": ".pdf", "method": "platform",
+      "chunk": {"separator": "\n\n", "max_tokens": 800, "remove_extra_spaces": true, "remove_urls_emails": false}
+    },
+    "D": {
+      "dataset": "qinghe_docx_a", "dir": "assets/kb_files/docx", "ext": ".docx", "method": "platform",
+      "chunk": {"separator": "\n", "max_tokens": 500, "remove_extra_spaces": true, "remove_urls_emails": false}
+    },
+    "S": {
+      "dataset": "qinghe_scan", "dir": "assets/kb_files/extra", "ext": ".pdf", "method": "platform",
+      "chunk": {"separator": "\n", "max_tokens": 500, "remove_extra_spaces": true, "remove_urls_emails": false}
+    },
+    "M": {
+      "dataset": "qinghe_pdf_sem", "dir": "assets/kb_files/pdf", "ext": ".pdf", "method": "semantic",
+      "semantic": {"breakpoint_percentile": 80, "min_chars": 60, "max_chars": 400, "break_on_heading": false}
+    },
+    "O": {
+      "dataset": "qinghe_scan_ocr", "dir": "assets/kb_files/extra", "ext": ".pdf", "method": "semantic", "ocr": true,
+      "semantic": {"breakpoint_percentile": 80, "min_chars": 60, "max_chars": 400, "break_on_heading": false}
+    }
+  }
+}

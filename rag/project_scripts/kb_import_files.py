@@ -7,11 +7,11 @@
 - 切片参数只有 4 个：separator、max_tokens、remove_extra_spaces、remove_urls_emails，没有重叠/父子分段；
 - SDK 没有删除文档的接口，所以“替换旧版本”只能在检索端按登记表过滤，不能物理删除。
 
-切片方案（每个方案一个数据集，互不混合；原有 qinghe_kb 为 C：按条款预切分的基线）：
-  A  qinghe_pdf_a   PDF，平台解析，separator="\\n"   max_tokens=500（SDK 命令行默认值）
-  B  qinghe_pdf_b   PDF，平台解析，separator="\\n\\n" max_tokens=800（段落优先、块更大）
-  D  qinghe_docx_a  DOCX，平台解析，与 A 相同参数（对比文件格式）
-  S  qinghe_scan    扫描件 PDF（只有图片），用来观察解析失败时的表现
+切片方案全部写在 config/kb_chunking.json（第四周起），每个方案一个数据集，互不混合；
+原有 qinghe_kb 为 C：按条款预切分的基线，由 scripts/import_kb.py 导入。method 两种：
+  platform  把文件交给平台解析，按分隔符切（A/B/D/S）；
+  semantic  语义切片，不依赖分隔符（本地拆句 → 逐句向量 → 相邻句语义距离突变处断开），
+            每段补「文档名｜章节｜状态」前缀后以纯文本导入；可加 "ocr": true 转写扫描页。
 
 登记表 kb_documents（项目 PostgreSQL）：同一环境 + 数据集 + 文件名 + sha256 已导入 → 跳过；
 文件名相同但内容变了 → 导入新版本，旧记录标为“已替换”，检索端据此过滤旧 doc_id。
@@ -20,7 +20,9 @@
   python scripts/kb_import_files.py --env dev --strategy A --dry-run   # 只列出将要做的事
   python scripts/kb_import_files.py --env dev --strategy A             # 导入
   python scripts/kb_import_files.py --env dev --list                   # 查看登记表
+  python scripts/kb_import_files.py --env dev --strategy M --dry-run --show 5   # 语义切片：看切出来的前 5 段
   python scripts/kb_import_files.py --env dev --strategy A --source github --github-base <raw 前缀>
+语义切片的全部段落另存一份到 assets/eval/chunks/<数据集>.md，方便人工检查。
 """
 import argparse
 import hashlib
@@ -38,16 +40,10 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 if ROOT not in sys.path:
     sys.path.insert(0, ROOT)
 
-STRATEGIES = {
-    "A": {"dataset": "qinghe_pdf_a", "dir": "assets/kb_files/pdf", "ext": ".pdf",
-          "chunk": {"separator": "\n", "max_tokens": 500, "remove_extra_spaces": True, "remove_urls_emails": False}},
-    "B": {"dataset": "qinghe_pdf_b", "dir": "assets/kb_files/pdf", "ext": ".pdf",
-          "chunk": {"separator": "\n\n", "max_tokens": 800, "remove_extra_spaces": True, "remove_urls_emails": False}},
-    "D": {"dataset": "qinghe_docx_a", "dir": "assets/kb_files/docx", "ext": ".docx",
-          "chunk": {"separator": "\n", "max_tokens": 500, "remove_extra_spaces": True, "remove_urls_emails": False}},
-    "S": {"dataset": "qinghe_scan", "dir": "assets/kb_files/extra", "ext": ".pdf",
-          "chunk": {"separator": "\n", "max_tokens": 500, "remove_extra_spaces": True, "remove_urls_emails": False}},
-}
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import kb_chunking as kc  # noqa: E402
+
+STRATEGIES = kc.load_strategies(ROOT)
 CONTENT_TYPES = {".pdf": "application/pdf",
                  ".docx": "application/vnd.openxmlformats-officedocument.wordprocessingml.document"}
 
@@ -160,6 +156,53 @@ def download_url(path, source, github_base):
     return storage.generate_presigned_url(key=key, expire_time=3600)
 
 
+def import_texts(client, dataset, texts):
+    """语义切片的结果：每段一个纯文本文档，分隔符设成文中不会出现的值，平台不会再切。"""
+    from coze_coding_dev_sdk import ChunkConfig, DataSourceType, KnowledgeDocument
+    doc_ids = []
+    for start in range(0, len(texts), 20):
+        batch = [KnowledgeDocument(source=DataSourceType.TEXT, raw_data=t) for t in texts[start:start + 20]]
+        last = None
+        for attempt in (1, 2):
+            try:
+                resp = client.add_documents(documents=batch, table_name=dataset,
+                                            chunk_config=ChunkConfig(**kc.TEXT_CHUNK))
+                if resp.code == 0:
+                    doc_ids += resp.doc_ids or []
+                    break
+                last = f"code={resp.code} msg={resp.msg}"
+            except Exception as exc:  # noqa: BLE001
+                last = f"{type(exc).__name__}: {exc}"
+            if attempt == 1:
+                time.sleep(2)
+        else:
+            raise RuntimeError(last)
+    return doc_ids
+
+
+def doc_title(path):
+    """文档名：优先取 assets/kb_docs 里同名 Markdown 的标题（与 qinghe_kb 前缀一致），否则用文件名。"""
+    stem = os.path.splitext(os.path.basename(path))[0].replace("_扫描件", "")
+    md = os.path.join(ROOT, "assets", "kb_docs", stem + ".md")
+    if os.path.exists(md):
+        first = next((ln for ln in open(md, encoding="utf-8") if ln.strip()), "")
+        return first.lstrip("#").strip(), md
+    return stem, None
+
+
+def semantic_file(path, cfg, status, embedder, log=print):
+    """一个文件 → 带前缀的段落列表，以及记录。"""
+    params = cfg.get("semantic") or {}
+    title, md = doc_title(path)
+    text, info = kc.document_text(path, bool(cfg.get("ocr")), os.path.join(ROOT, "assets", "kb_files", "ocr"), log)
+    if info["ocr_pages"] and md:
+        info["ocr_accuracy"] = round(kc.ocr_accuracy(text, open(md, encoding="utf-8").read()), 3)
+        log(f"    OCR 与原文相似度：{info['ocr_accuracy']:.1%}")
+    chunks, stats = kc.semantic_chunks(kc.split_units(text, title), embedder, params, title)
+    info.update(stats)
+    return [kc.prefixed(title, c["section"], status, c["text"]) for c in chunks], info
+
+
 def import_one(client, dataset, url, chunk):
     from coze_coding_dev_sdk import ChunkConfig, DataSourceType, KnowledgeDocument
     last = None
@@ -188,7 +231,7 @@ def cmd_list(env):
               f"doc_ids={r['doc_ids']} {r['imported_at']}")
 
 
-def cmd_import(env, strategy, dry_run, source, github_base):
+def cmd_import(env, strategy, dry_run, source, github_base, show=0):
     cfg = STRATEGIES[strategy]
     files = list_files(strategy)
     reg = registry(env)
@@ -196,11 +239,16 @@ def cmd_import(env, strategy, dry_run, source, github_base):
     if not dry_run:
         from coze_coding_dev_sdk import Config, KnowledgeClient
         client = KnowledgeClient(config=Config(), verbose=False)
-    print(f"方案 {strategy} → 数据集 {cfg['dataset']}，切片 {json.dumps(cfg['chunk'], ensure_ascii=False)}；登记表：{reg.kind}")
+    semantic = cfg["method"] == "semantic"
+    params = {k: cfg.get(k) for k in ("method", "chunk", "semantic", "ocr") if cfg.get(k) is not None}
+    print(f"方案 {strategy} → 数据集 {cfg['dataset']}，切片 {json.dumps(params, ensure_ascii=False)}；登记表：{reg.kind}")
+    embedder = kc.CachedEmbedder(os.path.join(ROOT, "assets", "kb_files", ".embedding_cache.json")) if semantic else None
+    preview = []
     done = skipped = failed = 0
     for path in files:
         name = os.path.basename(path)
-        digest = sha256(path)
+        # 内容指纹带上切片参数：参数改了，同一文件也按新版本重新导入
+        digest = sha256(path) if not semantic else sha256(path) + ":" + kc.config_digest(params)
         status = "已废止" if "已废止" in name else "现行"
         existing = reg.rows(cfg["dataset"], name)
         same = any(r["sha256"] == digest for r in existing)
@@ -210,18 +258,40 @@ def cmd_import(env, strategy, dry_run, source, github_base):
             skipped += 1
             continue
         action = "新版本，旧版本将标为已替换" if older else "新文件"
+        texts = None
+        if semantic:
+            try:
+                texts, info = semantic_file(path, cfg, status, embedder)
+            except Exception as exc:  # noqa: BLE001
+                print(f"  【切片失败】{name}：{type(exc).__name__}: {exc}")
+                failed += 1
+                continue
+            lengths = [len(t) for t in texts]
+            print(f"  {name}：{info.get('units', 0)} 句 → {len(texts)} 段，段长 {min(lengths or [0])}–{max(lengths or [0])} 字，"
+                  f"断点 {info.get('breaks')}，阈值 {info.get('threshold')}")
+            preview += [f"## {name} · 第 {i} 段（{len(t)} 字）\n\n```\n{t}\n```\n" for i, t in enumerate(texts, 1)]
+            for t in texts[:show]:
+                print("    ┌" + t.replace("\n", "\n    │") + "\n    └")
         if dry_run:
             print(f"  将导入（{action}）：{name}")
             continue
         try:
-            doc_ids = import_one(client, cfg["dataset"], download_url(path, source, github_base), cfg["chunk"])
+            if semantic:
+                doc_ids = import_texts(client, cfg["dataset"], texts)
+            else:
+                doc_ids = import_one(client, cfg["dataset"], download_url(path, source, github_base), cfg["chunk"])
         except Exception as exc:  # noqa: BLE001
             print(f"  【导入失败】{name}：{exc}")
             failed += 1
             continue
-        reg.record(cfg["dataset"], name, digest, status, doc_ids, cfg["chunk"], older)
+        reg.record(cfg["dataset"], name, digest, status, doc_ids, params, older)
         print(f"  已提交导入（{action}）：{name} doc_ids={doc_ids}")
         done += 1
+    if preview:
+        out = os.path.join(ROOT, "assets", "eval", "chunks", f"{cfg['dataset']}.md")
+        os.makedirs(os.path.dirname(out), exist_ok=True)
+        open(out, "w", encoding="utf-8").write(f"# {cfg['dataset']} 切片结果\n\n" + "\n".join(preview))
+        print(f"  全部段落已存到 {os.path.relpath(out, ROOT)}；向量接口调用 {embedder.calls} 次（其余来自缓存）")
     print(f"完成：提交 {done}，跳过 {skipped}，失败 {failed}。导入是异步的，约 1–3 分钟后再检索。")
     return 1 if failed else 0
 
@@ -235,6 +305,7 @@ def main():
     parser.add_argument("--source", choices=("storage", "github"), default="storage",
                         help="storage=上传到项目对象存储后用预签名链接；github=用公开仓库的 raw 链接")
     parser.add_argument("--github-base")
+    parser.add_argument("--show", type=int, default=0, help="语义切片：打印每个文件的前 N 段")
     args = parser.parse_args()
     os.environ["COZE_PROJECT_ENV"] = {"dev": "DEV", "prod": "PROD"}[args.env]
     if args.list:
@@ -242,7 +313,7 @@ def main():
         return 0
     if not args.strategy:
         parser.error("请指定 --strategy 或 --list")
-    return cmd_import(args.env, args.strategy, args.dry_run, args.source, args.github_base)
+    return cmd_import(args.env, args.strategy, args.dry_run, args.source, args.github_base, args.show)
 
 
 if __name__ == "__main__":

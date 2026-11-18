@@ -11,6 +11,7 @@ answer / verify 只在状态里传递草稿，校验通过（或重生成后仍�
 import importlib.util
 import json
 import logging
+import math
 import os
 import re
 import time
@@ -34,10 +35,17 @@ logger = logging.getLogger(__name__)
 LLM_CONFIG = "config/agent_llm_config.json"
 RETRIEVAL_CONFIG = "config/rag_retrieval.json"
 MAX_MESSAGES = 40
-MAX_ANSWER_CHARS = 430  # 整段回答（去掉空白后）超过这个长度就压缩一次
-COMPRESS_TARGET = 360
+AGENT_VERSION = "w4.3"  # 写进每个回答的 json，评测报告据此确认是哪个版本在作答
+MAX_ANSWER_CHARS = 400       # 整段回答（去掉空白后）超过这个长度就压缩
+LIST_MAX_ANSWER_CHARS = 450  # 列举类 / 宽泛问题条目多，长度预算放宽（w4.1 统一 400，压缩时丢了关键事实）
+COMPRESS_MARGIN = 50         # 模型压缩的目标 = 长度上限 - 这个余量
+
+
+def _answer_limit(list_query: bool) -> int:
+    return LIST_MAX_ANSWER_CHARS if list_query else MAX_ANSWER_CHARS
 LENGTH_REASON = "回答过长"
 SENTINEL_PREFIX = "QINGHE_KB_SENTINEL"
+KB_DATASET = "qinghe_kb"  # scripts/import_kb.py 维护的线上数据集
 FICTIONAL_NOTE = "本文档为虚构示例，仅用于 RAG 问答测试。"
 SOURCE_RE = re.compile(r"^【来源：《(?P<title>.+?)》｜(?P<section>.+?)｜(?P<status>.+?)】\s*")
 TITLE_RE = re.compile(r"《([^》]+)》")
@@ -70,6 +78,24 @@ def _llm_config() -> Dict[str, Any]:
     return _load_json(LLM_CONFIG)
 
 
+DEFAULT_RERANK = {
+    "method": "lexical",      # none | lexical（关键词 + 向量分融合，不调模型）| llm（模型逐段打相关分）
+    "candidates": 10,         # 先多取这么多段，再重排
+    "keep": 6,                # 重排后最多送入模型的段数（列举类问题用 list_max_context_chunks）
+    "min_keep": 3,            # 至少送入的段数
+    "relative_cut": 0.8,      # 分数低于第一名这个倍数的段落不送（相对阈值，按题自适应）
+    "section_fill": 1,        # 截断后，已送入的章节里被截掉的段落补回几段（避免一章只送一半），0 关闭
+    "lexical_weight": 0.5,    # 关键词分的权重，其余是向量分
+    "llm_allow_empty": False, # llm 方式：所有段落都判为无关时，是否直接判定"未找到"
+}
+
+
+def _rerank_config(cfg: Dict[str, Any]) -> Dict[str, Any]:
+    merged = dict(DEFAULT_RERANK)
+    merged.update(cfg.get("rerank") or {})
+    return merged
+
+
 def _retrieval_config() -> Dict[str, Any]:
     try:
         return _load_json(RETRIEVAL_CONFIG)
@@ -84,6 +110,7 @@ def _retrieval_config() -> Dict[str, Any]:
             "filter_stale": True,
             "max_context_chunks": 6,
             "list_max_context_chunks": 10,
+            "rerank": dict(DEFAULT_RERANK),
         }
 
 
@@ -137,6 +164,8 @@ class AgentState(MessagesState):
     started_at: float
     latency_ms: int
     reply: str
+    rerank_info: Dict[str, Any]
+    compress_info: Dict[str, Any]
 
 
 def _content_text(content: Any) -> str:
@@ -370,11 +399,14 @@ def node_retrieve(state: AgentState) -> Dict[str, Any]:
     query = (state.get("rewritten_query") or state.get("question") or "").strip()
     datasets = cfg.get("datasets") or ["qinghe_kb"]
     top_k = int(cfg.get("top_k", 6))
+    rr = _rerank_config(cfg)
+    if rr["method"] != "none":
+        top_k = max(top_k, int(rr["candidates"]))  # 多取候选，交给 grade 重排后再截断
     min_score = float(cfg.get("min_score", 0.0))
 
     queries = [query]
     if state.get("list_query"):
-        top_k *= 2
+        top_k = int(cfg.get("top_k", 6)) * 2
         subs, keywords = _split_queries(query)
         queries = subs or [query]
         if keywords:
@@ -416,6 +448,7 @@ def node_retrieve(state: AgentState) -> Dict[str, Any]:
 # --------------------------------------------------------------------------- #
 STALE_STATES = {"已替换", "已下线"}
 _VALID_KEYS: Optional[set] = None
+_SEGMENTS: Optional[List[str]] = None
 
 
 def _norm_key(text: str) -> str:
@@ -423,16 +456,16 @@ def _norm_key(text: str) -> str:
     return re.sub(r"\s+", "", (text or "").replace(FICTIONAL_NOTE, ""))
 
 
-def _valid_segment_keys() -> set:
-    """assets/kb_docs 里当前文档切出的全部段落（与 scripts/import_kb.py 的导入规则一致）。
+def _current_segments() -> List[str]:
+    """assets/kb_docs 里当前文档按导入规则（scripts/import_kb.py）切出的全部段落文本。
 
-    读取或切分失败时返回空集合，调用方据此跳过筛选：宁可不筛，也不能把所有段落都误判成旧内容。
+    读取或切分失败时返回空列表：调用方据此跳过旧段筛选、关键词重排退回只用向量分。
     进程内只算一次；文档更新要重新部署（或重启进程），此时会重新计算。
     """
-    global _VALID_KEYS
-    if _VALID_KEYS is not None:
-        return _VALID_KEYS
-    keys: set = set()
+    global _SEGMENTS
+    if _SEGMENTS is not None:
+        return _SEGMENTS
+    segments: List[str] = []
     try:
         root = _project_root()
         spec = importlib.util.spec_from_file_location(
@@ -449,18 +482,221 @@ def _valid_segment_keys() -> set:
             title = rules.extract_title(lines)
             status = rules.determine_status(title)
             for section, content in rules.split_segments(lines[1:]):
-                keys.add(_norm_key(rules.build_chunk_text(title, section, status, content)))
-        logger.info("当前文档共 %d 段，用于筛掉知识库里的旧段落", len(keys))
+                segments.append(rules.build_chunk_text(title, section, status, content))
+        logger.info("当前文档共 %d 段", len(segments))
     except Exception as exc:  # noqa: BLE001
-        logger.warning("生成当前段落清单失败，本次不筛旧段落: %s: %s", type(exc).__name__, exc)
-        keys = set()
-    _VALID_KEYS = keys
-    return keys
+        logger.warning("读取当前文档段落失败: %s: %s", type(exc).__name__, exc)
+        segments = []
+    _SEGMENTS = segments
+    return segments
+
+
+def _valid_segment_keys() -> set:
+    """当前文档段落的比对键：不在其中的带前缀段落就是旧版本或已下线内容。"""
+    global _VALID_KEYS
+    if _VALID_KEYS is None:
+        _VALID_KEYS = {_norm_key(t) for t in _current_segments()}
+    return _VALID_KEYS
 
 
 # --------------------------------------------------------------------------- #
-# 4. grade：过滤标记段 / 已废止段 / 旧版本段，去重，截断上下文
+# 二次重排：平台检索只按向量相似度排序，也没有重排模型。
+# lexical：BM25 关键词分（词频统计取自全部当前段落）与向量分各自归一化后加权；
+# llm：模型一次给所有候选段打 0–3 分的相关度。
+# 之后按"相对第一名的分数"截断：比第一名低太多的段落不送入模型（每题自适应，不是全局阈值）。
 # --------------------------------------------------------------------------- #
+_PUNCT_RE = re.compile(r"[\s\u3000，。、；：？！“”‘’（）《》【】｜\-—.,;:?!()\[\]\"'/·…%％]+")
+_STOP_WORDS = ["是多少", "多少", "什么", "哪些", "怎么", "如何", "需要", "可以", "能否", "是否", "公司", "员工",
+               "我们", "我的", "请问", "一下", "有没有", "吗", "呢", "的", "了", "要", "是", "有", "在", "和", "与", "及"]
+
+
+def _terms(text: str) -> List[str]:
+    """中文按相邻两字切词；数字、英文整词保留。问句常用词不参与打分。"""
+    t = _PUNCT_RE.sub(" ", text or "")
+    for w in _STOP_WORDS:
+        t = t.replace(w, " ")
+    out: List[str] = []
+    for tok in re.findall(r"[A-Za-z]+\d*|\d+(?:\.\d+)?|[\u4e00-\u9fff]+", t):
+        if re.match(r"[A-Za-z\d]", tok):
+            out.append(tok.lower())
+        elif len(tok) == 1:
+            out.append(tok)
+        else:
+            out.extend(tok[i:i + 2] for i in range(len(tok) - 1))
+    return out
+
+
+class _BM25:
+    def __init__(self, corpus: List[str], k1: float = 1.2, b: float = 0.75):
+        docs = [_terms(t) for t in corpus]
+        self.n = max(1, len(docs))
+        self.avgdl = (sum(len(d) for d in docs) / self.n) if docs else 1.0
+        self.df: Dict[str, int] = {}
+        for d in docs:
+            for term in set(d):
+                self.df[term] = self.df.get(term, 0) + 1
+        self.k1, self.b = k1, b
+
+    def score(self, query: str, text: str) -> float:
+        q = set(_terms(query))
+        d = _terms(text)
+        if not q or not d:
+            return 0.0
+        tf: Dict[str, int] = {}
+        for term in d:
+            tf[term] = tf.get(term, 0) + 1
+        total = 0.0
+        for term in q:
+            f = tf.get(term, 0)
+            if f:
+                df = self.df.get(term, 0)
+                idf = math.log(1 + (self.n - df + 0.5) / (df + 0.5))
+                total += idf * f * (self.k1 + 1) / (f + self.k1 * (1 - self.b + self.b * len(d) / self.avgdl))
+        return total
+
+
+_BM25_INDEX: Optional[_BM25] = None
+
+
+def _bm25(fallback: List[str]) -> _BM25:
+    global _BM25_INDEX
+    if _BM25_INDEX is None:
+        corpus = _current_segments()
+        if not corpus:
+            return _BM25(fallback)  # 读不到文档时只用候选段落统计词频，不缓存
+        _BM25_INDEX = _BM25(corpus)
+    return _BM25_INDEX
+
+
+def _lexical_rerank(query: str, items: List[Dict[str, Any]], weight: float) -> List[Dict[str, Any]]:
+    texts = [f"{it.get('title', '')}{it.get('section', '')}{it.get('body', '')}" for it in items]
+    index = _bm25(texts)
+    lex = [index.score(query, t) for t in texts]
+    vec = [float(it.get("score") or 0.0) for it in items]
+    lmax, vmax = (max(lex) if lex else 0) or 1.0, (max(vec) if vec else 0) or 1.0
+    for it, l, v in zip(items, lex, vec):
+        it["rerank_score"] = round(weight * l / lmax + (1 - weight) * v / vmax, 4)
+    return sorted(items, key=lambda x: x["rerank_score"], reverse=True)
+
+
+RERANK_SYS = (
+    "你是检索结果评审员。给出用户问题和若干编号片段，判断每个片段对回答这个问题有多大用处：\n"
+    "3 = 直接包含答案；2 = 回答时需要用到（条件、例外、相关条款）；1 = 主题相关但用不上；0 = 无关。\n"
+    "只看片段本身写了什么，不要因为同一文档的其他内容加分。"
+    "只输出 JSON：{\"scores\": [每个片段的分数，按编号顺序]}，不要输出其他内容。"
+)
+
+
+def _llm_rerank(query: str, items: List[Dict[str, Any]]) -> Optional[List[Dict[str, Any]]]:
+    """模型打分重排；失败返回 None，调用方退回关键词重排。"""
+    listing = "\n\n".join(
+        f"[{i}] 《{it.get('title', '')}》｜{it.get('section', '')}\n{(it.get('body') or '')[:300]}"
+        for i, it in enumerate(items, 1)
+    )
+    try:
+        data = _extract_json(_invoke_text([
+            SystemMessage(content=RERANK_SYS),
+            HumanMessage(content=f"【用户问题】\n{query}\n\n【片段】\n{listing}"),
+        ])) or {}
+        scores = [float(x) for x in (data.get("scores") or [])]
+    except Exception as exc:  # noqa: BLE001
+        logger.warning("模型重排失败，退回关键词重排: %s: %s", type(exc).__name__, exc)
+        return None
+    if len(scores) != len(items):
+        logger.warning("模型重排返回 %d 个分数，候选 %d 段，退回关键词重排", len(scores), len(items))
+        return None
+    for i, (it, sc) in enumerate(zip(items, scores)):
+        # 同分时按原检索名次：在小数位上加一点按名次递减的值
+        it["rerank_score"] = round(sc / 3 + (len(items) - i) * 1e-4, 4)
+    return sorted(items, key=lambda x: x["rerank_score"], reverse=True)
+
+
+def _rerank(query: str, items: List[Dict[str, Any]], rr: Dict[str, Any], list_query: bool,
+            max_chunks: int) -> Tuple[List[Dict[str, Any]], Dict[str, Any]]:
+    """返回 (送入模型的段落, 记录)。"""
+    info = {"method": rr["method"], "candidates": len(items)}
+    method = rr["method"]
+    ranked = items
+    if method == "llm" and not list_query:
+        ranked = _llm_rerank(query, items)
+        if ranked is None:
+            method = info["fallback"] = "lexical"
+        elif rr.get("llm_allow_empty") and ranked and ranked[0]["rerank_score"] < 1 / 3:
+            info["sent"] = 0
+            return [], info  # 全部判为无关
+    if method == "lexical" or (method == "llm" and list_query):
+        ranked = _lexical_rerank(query, items, float(rr["lexical_weight"]))
+    min_keep = int(rr.get("min_keep", 3))
+    if list_query and method != "none":
+        kept = _cover_sections(ranked, max_chunks)  # 列举类：不截断，先保证各章都有一段
+        info["sections"] = len({(c.get("title"), c.get("section")) for c in kept})
+    elif method == "none":
+        kept = ranked[:max_chunks]
+    elif method == "llm":
+        # 模型打分：只送"直接包含答案"或"回答时需要用到"（2 分及以上）的段落，至少 min_keep 段
+        kept = [c for i, c in enumerate(ranked[:max_chunks])
+                if i < min_keep or c.get("rerank_score", 0) >= 2 / 3]
+    else:
+        kept = ranked[:max_chunks]
+        top = kept[0].get("rerank_score", 0) if kept else 0
+        ratio = float(rr.get("relative_cut") or 0)
+        if ratio and top > 0:
+            kept = [c for i, c in enumerate(kept) if i < min_keep or c.get("rerank_score", 0) >= ratio * top]
+    if method != "none" and not list_query:
+        # 模型重排时，模型判为"无关"（0 分）的段落不补回
+        kept, filled = _fill_sections(kept, ranked, min(int(rr.get("section_fill", 0) or 0),
+                                                        max(0, max_chunks - len(kept))),
+                                      min_score=0.3 if method == "llm" else None)
+        if filled:
+            info["section_filled"] = filled
+    info["sent"] = len(kept)
+    return kept, info
+
+
+def _cover_sections(ranked: List[Dict[str, Any]], max_chunks: int) -> List[Dict[str, Any]]:
+    """列举类问题（"信息安全规定有哪些"）的选段：先给主要文档的每一章各留一段，再按名次补满。
+
+    w4.2 按名次取前 10 段时，同一章的多段占满名额，排在后面的整章（如"外部 AI 工具使用"）一段都没送进去，
+    回答就漏了这一章。主要文档 = 排名前 3 段所属的文档，避免把不相关文档的章节硬塞进来。
+    """
+    if len(ranked) <= max_chunks:
+        return ranked
+    main_docs = {c.get("title") for c in ranked[:3]}
+    chosen, seen = [], set()
+    for c in ranked:
+        key = (c.get("title"), c.get("section"))
+        if c.get("title") in main_docs and c.get("section") and key not in seen:
+            seen.add(key)
+            chosen.append(c)
+    chosen = chosen[:max_chunks]
+    picked = {id(c) for c in chosen}
+    for c in ranked:
+        if len(picked) >= max_chunks:
+            break
+        picked.add(id(c))
+    return [c for c in ranked if id(c) in picked]
+
+
+def _fill_sections(kept: List[Dict[str, Any]], ranked: List[Dict[str, Any]], limit: int,
+                   min_score: Optional[float] = None) -> Tuple[List[Dict[str, Any]], int]:
+    """同章补全：截断留下了某一章的部分段落时，把同一文档同一章被截掉的段落补回来，最多 limit 段。
+
+    一章常被切成几段（比如"服务时间"和"适用范围"分在两段），只送一半会让模型以为另一半"文档未规定"。
+    补回的段落按重排名次取，最后整体仍按重排名次排列。
+    """
+    if limit <= 0 or not kept:
+        return kept, 0
+    sections = {(c.get("title"), c.get("section")) for c in kept if c.get("section")}
+    chosen = {id(c) for c in kept}
+    added = [c for c in ranked
+             if id(c) not in chosen and (c.get("title"), c.get("section")) in sections
+             and (min_score is None or c.get("rerank_score", 0) >= min_score)][:limit]
+    if not added:
+        return kept, 0
+    chosen |= {id(c) for c in added}
+    return [c for c in ranked if id(c) in chosen], len(added)
+
+
 def _doc_lookup(datasets: List[str]) -> Dict[str, Dict[str, str]]:
     """doc_id → 文档信息，优先 kb_documents 表，其次 assets/kb_index.{env}.json。"""
     lookup: Dict[str, Dict[str, str]] = {}
@@ -576,17 +812,24 @@ def node_grade(state: AgentState) -> Dict[str, Any]:
         if item["state"] in STALE_STATES:
             stale += 1  # 文件方式导入的数据集：登记表里已被新版本替换
             continue
-        if valid and SOURCE_RE.match(content) and key not in valid:
-            stale += 1  # 带来源前缀的段落：当前文档里已经没有这段文字
+        if (valid and item.get("dataset", KB_DATASET) == KB_DATASET and SOURCE_RE.match(content)
+                and key not in valid):
+            stale += 1  # qinghe_kb 的带前缀段落：当前文档里已经没有这段文字（语义切片等实验数据集不按此筛）
             logger.info("过滤旧版本片段: %s｜%s", item["title"], item["section"])
             continue
         kept.append(item)
     if stale or duplicated:
         logger.info("筛掉旧版本段落 %d 条、重复段落 %d 条", stale, duplicated)
 
-    kept = kept[:max_chunks]
+    rr = _rerank_config(cfg)
+    if rr["method"] != "none" and not state.get("list_query"):
+        max_chunks = min(max_chunks, int(rr.get("keep", max_chunks)))
+    query = state.get("rewritten_query") or state.get("question") or ""
+    kept, rerank_info = _rerank(query, kept, rr, bool(state.get("list_query")), max_chunks)
+    logger.info("重排: %s", rerank_info)
     if not kept:
-        return {"chunks": [], "status": "not_found", "status_reason": "过滤后无可用片段"}
+        return {"chunks": [], "status": "not_found", "status_reason": "过滤或重排后无可用片段",
+                "rerank_info": rerank_info}
 
     lines = []
     for i, item in enumerate(kept, 1):
@@ -594,7 +837,7 @@ def node_grade(state: AgentState) -> Dict[str, Any]:
         if item["section"]:
             head += f"｜{item['section']}"
         lines.append(f"{head}\n{item['body']}")
-    return {"chunks": kept, "context_text": "\n\n".join(lines)}
+    return {"chunks": kept, "context_text": "\n\n".join(lines), "rerank_info": rerank_info}
 
 
 # --------------------------------------------------------------------------- #
@@ -611,7 +854,9 @@ ANSWER_RULES = """【作答要求】
 - 问题问的是某类事项的细分口径（例如按公里、按小时、按某个子类），而片段里有同一类事项、同一种指标的总体规定（问金额有金额上限、问时限有时限）时，不算无关：先给出这条总体规定，再说明"文档未按××规定"。
 - 问到的指标片段里根本没有（例如问发放日期，片段只有系数、比例），属于无关，不要拿别的指标凑答案。
 - 只有片段与问题完全无关、连同类事项的规定也没有时，才只输出这一句，不要输出其他任何内容：知识库中未找到相关信息。
-- 默认不超过 300 字；列举类问题用简短列表，每条一句话，把片段里出现的条目都列出来，全文不超过 400 字。
+- 默认不超过 300 字。
+- 列举类问题用简短列表，把片段里出现的条目都列出来；问"有哪些规定"时，片段涉及的每一章至少列一条。每条一句：名称 + 具体对象和关键数字或条件 + 出处，不展开例外；全文不超过 400 字；每条后面已标出处，结尾不再写「依据」列表。
+- 写具体内容，不要用"相关材料""相关要求""相关安排"这类概括词代替原文列出的对象（例如要带的证件、可用的工具清单、分档金额）。
 - 数字、金额、比例照原文引用；不得把系数、比例换算成文档没有的单位（例如系数 2.0 不得说成 2 个月工资）。
 - 只有使用《员工考勤与休假制度》且问题涉及 v1/v2 差异时，才可以提"旧版已废止"；其他文档一律不提废止。
 - 没有内容的栏目整行省略，不要写"说明：无"。
@@ -736,42 +981,285 @@ def _count_items(text: str) -> int:
 
 
 COMPRESS_SYS = (
-    "你是文字压缩器。把用户给出的回答压缩到 " + str(COMPRESS_TARGET) + " 字以内。规则：\n"
+    "你是文字压缩器。把用户给出的回答压缩到 {target} 字以内。规则：\n"
     "1. 原来的每一个条目都要保留，条目数量不能减少，编号方式不变；\n"
-    "2. 每条只留名称、最关键的数字或条件，以及出处；删掉细则、举例、解释和重复的话；\n"
+    "2. 每条保留名称、具体对象（证件、工具、清单名等）、所有数字和分档条件，以及出处；"
+    "删掉解释、举例、重复的话和连接词；不要用\"相关材料\"\"相关要求\"这类概括词代替具体内容；\n"
     "3. 出处保持（《文档名》｜章节或条款）的写法，文档名一个字都不要改；\n"
     "4. 不新增原回答里没有的内容、数字或文档；\n"
     "5. 删掉末尾的「依据」列表；\n"
     "6. 只输出压缩后的回答，以 **答案**： 开头，不要解释。"
 )
 
+_BASIS_RE = re.compile(r"\n\s*\**\s*依据\s*\**\s*[：:]")
+_CITE_RE = re.compile(r"[（(]《[^》]+》[^）)]*[）)]")
+_ITEM_RE = re.compile(r"^(\s*(?:\d+[.、．]|[-•*](?=\s)))\s*(.*)$")
+_CITE_SECTION_RE = re.compile(r"[（(](《[^》]+》)\s*[｜|]?[^）)]*?(第[一二三四五六七八九十百\d]+条)")
 
-def _shorten(answer: str, chunks: List[Dict[str, Any]], question: str) -> str:
-    """回答内容都有依据、只是偏长时：先让模型压缩；压缩结果丢了条目、带进了没依据的内容
-    或者没变短，就不用它，改为只去掉末尾重复的"依据"列表。完整优先于简短。"""
-    items = _count_items(answer)
+
+def _drop_basis(answer: str) -> str:
+    """正文里已经逐条标了出处时，末尾的「依据」列表是重复信息，可以整段去掉（不丢任何事实）。"""
+    m = _BASIS_RE.search("\n" + answer)
+    if not m:
+        return answer
+    body = ("\n" + answer)[:m.start()].strip()
+    return body if body and _CITE_RE.search(body) else answer
+
+
+_DANGLING_ENDINGS = ("后", "时", "前", "的", "如", "若", "对", "在", "因", "凡", "经", "由")
+_CONDITION_STARTS = ("无论", "不论", "不管", "凡", "如果", "如", "若", "对于", "除")
+_CN_NUM = "零一二两三四五六七八九十百千万"
+_HAS_NUMBER_RE = re.compile(r"\d|[" + _CN_NUM + r"]+\s*(?:家|个|张|份|项|天|次|年|级|条|位|名|人|小时|分钟|周|月|倍)")
+
+
+def _is_condition(clause: str) -> bool:
+    """只是条件、单独留下没有意义的分句："审核通过后""采购电脑的""无论金额大小"。"""
+    c = clause.strip()
+    return c.endswith(_DANGLING_ENDINGS) or c.startswith(_CONDITION_STARTS)
+
+
+def _cut_clause(text: str, budget: int) -> str:
+    """一个句子超出预算时在逗号处截断；截断处前面若只是条件，就带上后面的分句。只删不改。"""
+    if len(text) <= budget:
+        return text
+    parts = [p + "，" for p in _split_outside_brackets(text)]
+    parts[-1] = parts[-1][:-1]
+    out = ""
+    for i, part in enumerate(parts):
+        if out and len(out) + len(part) > budget and not _is_condition(out.rstrip("，,")):
+            break
+        out += part
+    return out.rstrip("，, ")
+
+
+def _first_clause(text: str, budget: int) -> str:
+    """取一条内容的第一句，超出预算就在逗号处截断（保留 w4.1 的接口，供兜底使用）。"""
+    head = re.split(r"[；;。]", text, maxsplit=1)[0].strip()
+    return _cut_clause(head, budget)
+
+
+def _split_outside_brackets(text: str) -> List[str]:
+    """按逗号切分，但括号里的逗号不切（"IT 服务台（分机 8800，邮箱 …）"不会被切成半个括号）。"""
+    parts, buf, depth = [], "", 0
+    for ch in text:
+        if ch in "（(":
+            depth += 1
+        elif ch in "）)":
+            depth = max(0, depth - 1)
+        if ch in "，," and depth == 0:
+            parts.append(buf)
+            buf = ""
+        else:
+            buf += ch
+    parts.append(buf)
+    return parts
+
+
+def _units(plain: str) -> Tuple[str, List[List[str]]]:
+    """把一个条目拆成 (标签, 句子列表)，每个句子再拆成分句组。
+
+    - "适用范围：……"里冒号前的短标签保留；
+    - "按金额确定审批权限：金额低于 5000 元……"这类没有事实的长引导语删掉；
+    - 只是条件的分句（"……的""无论金额大小"）和后一个分句合成一组，不会被单独留下。
+    """
+    label, body = "", plain.strip()
+    m = re.match(r"^([^：:，,；;。]{1,10})[：:](.+)$", body)
+    if m:
+        label, body = m.group(1).strip() + "：", m.group(2).strip()
+    units: List[List[str]] = []
+    for sent in re.split(r"[；;。]", body):
+        sent = sent.strip()
+        if not sent:
+            continue
+        lead = re.match(r"^([^：:]{11,})[：:](.+)$", sent)
+        if lead and _HAS_NUMBER_RE.search(lead.group(2)) and not _HAS_NUMBER_RE.search(lead.group(1)):
+            sent = lead.group(2).strip()
+        groups: List[str] = []
+        buf = ""
+        for part in _split_outside_brackets(sent):
+            part = part.strip()
+            if not part:
+                continue
+            buf = f"{buf}，{part}" if buf else part
+            if not _is_condition(part):
+                groups.append(buf)
+                buf = ""
+        if buf:
+            if groups:
+                groups[-1] += "，" + buf
+            else:
+                groups.append(buf)
+        units.append(groups)
+    return label, units
+
+
+def _render_item(label: str, units: List[List[str]], chosen: set) -> str:
+    sents = []
+    for u, groups in enumerate(units):
+        picked = [g for k, g in enumerate(groups) if (u, k) in chosen]
+        if picked:
+            sents.append("，".join(picked))
+    return label + "；".join(sents) if sents else label.rstrip("：:")
+
+
+def _short_cite(cite: str) -> str:
+    """出处只留《文档名》和条款号，删掉中间的章节名：（《差旅与报销管理办法》第八条）。"""
+    m = _CITE_SECTION_RE.match(cite)
+    return f"（{m.group(1)}{m.group(2)}）" if m else cite
+
+
+def _extractive_trim(answer: str, limit: int) -> str:
+    """兜底压缩（只删不写）：在全部条目里按优先级挑分句，直到放不下为止。
+
+    每条必留：标签 + 第一个分句组（条件从句和它的主句算一组）；
+    其余分句按优先级补：带数字的（分档金额、期限、次数）> 句子的开头分句 > 其他，同级按原顺序。
+    w4.1 每条只留第一句，"5000–50000 元须三家比价"这类后面的分档被整段删掉；现在数字优先保留，
+    解释性的尾巴（"一经发现""各部门均须遵守"）最先删。输出的每个字都来自原回答，条目数量不变。
+    """
+    text = _BASIS_RE.split("\n" + answer)[0].strip()
+    lines = [ln for ln in text.splitlines() if ln.strip()]
+    # 只是分组标题的条目（"1. 账号与密码相关："，下面再列子条目）原样保留，不当作要压缩的条目
+    item_idx = [i for i, ln in enumerate(lines) if _ITEM_RE.match(ln)
+                and not (_ITEM_RE.match(ln).group(2).strip().endswith(("：", ":"))
+                         and not _CITE_RE.search(ln))]
+    if not item_idx:
+        return text
+    parsed: Dict[int, Tuple[str, str, str, List[List[str]]]] = {}
+    cited_docs: set = set()
+    for i in item_idx:
+        marker, rest = _ITEM_RE.match(lines[i]).groups()
+        cites = _CITE_RE.findall(rest)
+        cite = _short_cite(cites[0]) if cites else ""
+        m = _CITE_SECTION_RE.match(cite)
+        if m and m.group(1) in cited_docs:
+            cite = f"（{m.group(2)}）"  # 同一文档第二次起只写条款号，省下重复的书名
+        elif m:
+            cited_docs.add(m.group(1))
+        label, units = _units(_CITE_RE.sub("", rest).strip().rstrip("。"))
+        parsed[i] = (marker, cite, label, units)
+    chosen = {i: {(0, 0)} for i in item_idx}
+    headings = {i for i, ln in enumerate(lines) if i not in parsed and _ITEM_RE.match(ln)}
+    flat = {"on": False}  # 去掉分组标题后，子条目也不再缩进
+
+    def render() -> str:
+        out = []
+        for i, ln in enumerate(lines):
+            if i not in parsed:
+                if not (flat["on"] and i in headings):
+                    out.append(ln)
+                continue
+            marker, cite, label, units = parsed[i]
+            mk = marker.strip() if flat["on"] else marker.rstrip()
+            out.append(f"{mk} {_render_item(label, units, chosen[i])}{cite}。")
+        return "\n".join(out)
+
+    current = render()
+    # 每条只留第一组仍超长（条目很多的嵌套列表）：依次删不带数字的括号说明、分组标题、其余括号说明，最后在逗号处截短
+    paren = re.compile(r"[（(][^（）()]*[）)]")
+    for step in ("paren_no_number", "headings", "paren", "cut"):
+        if _answer_len(current) <= limit:
+            break
+        if step == "headings":
+            flat["on"] = bool(headings)  # 分组标题只是结构，去掉不丢事实
+            current = render()
+            continue
+        for i in item_idx:
+            for groups in parsed[i][3]:
+                for k, g in enumerate(groups):
+                    if step == "cut":
+                        groups[k] = _cut_clause(g, 24) if k == 0 else g
+                    else:
+                        groups[k] = paren.sub(lambda m: m.group(0) if step == "paren_no_number"
+                                              and _HAS_NUMBER_RE.search(m.group(0)) else "", g)
+        current = render()
+    if _answer_len(current) > limit:
+        return current
+    candidates = []
+    for order, i in enumerate(item_idx):
+        for u, groups in enumerate(parsed[i][3]):
+            for k, g in enumerate(groups):
+                if (u, k) != (0, 0):
+                    # 带数字的、或列举了具体对象的（"身份证原件、学历证书原件、离职证明"）优先
+                    concrete = _HAS_NUMBER_RE.search(g) or g.count("、") >= 2
+                    rank = 0 if concrete else (1 if k == 0 else 2)
+                    candidates.append((rank, u, k, order, i))
+    candidates.sort()
+    progress = True
+    while progress:  # 一个分句要等同一句里它前面的分句选上才能选，不跳着拼句子
+        progress = False
+        for cand in candidates:
+            _, u, k, _, i = cand
+            if k > 0 and (u, k - 1) not in chosen[i]:
+                continue
+            chosen[i].add((u, k))
+            trial = render()
+            if _answer_len(trial) <= limit:
+                current = trial
+            else:
+                chosen[i].discard((u, k))
+            candidates.remove(cand)
+            progress = True
+            break
+    return current
+
+
+def _numbers(text: str) -> set:
+    """回答正文（不含出处和书名号）里的数字，用来检查压缩有没有丢掉分档、期限这类关键数字。"""
+    body = _CITE_RE.sub("", _BASIS_RE.split("\n" + text)[0])
+    body = _LIST_MARKER_RE.sub("", TITLE_RE.sub("", body)).replace(",", "")
+    return set(re.findall(r"\d+(?:\.\d+)?", body))
+
+
+def _llm_compress(current: str, target: int) -> str:
     try:
-        text = _clean_answer(_invoke_text([SystemMessage(content=COMPRESS_SYS), HumanMessage(content=answer)]))
+        return _clean_answer(_invoke_text([SystemMessage(content=COMPRESS_SYS.format(target=target)),
+                                           HumanMessage(content=current)]))
     except Exception as exc:  # noqa: BLE001
         logger.warning("压缩回答失败: %s: %s", type(exc).__name__, exc)
-        text = ""
-    if text:
-        check = _verify(text, chunks, question)
+        return ""
+
+
+def _shorten(answer: str, chunks: List[Dict[str, Any]], question: str,
+             limit: int = MAX_ANSWER_CHARS) -> Tuple[str, Dict[str, Any]]:
+    """回答内容都有依据、只是偏长时逐级压缩，返回 (回答, 记录)：
+    1. 去掉重复的「依据」列表（无损）；
+    2. 让模型压缩（最多两轮）；丢了条目、丢了两成以上的数字、带进没依据的内容或没变短就不用；
+    3. 仍超长：程序删减（只删不写，优先保留带数字的句子），保证长度。
+    """
+    info: Dict[str, Any] = {"from": _answer_len(answer), "limit": limit, "steps": []}
+    current = _drop_basis(answer)
+    if current != answer:
+        info["steps"].append("drop_basis")
+    items, nums = _count_items(current), _numbers(current)
+    for _ in range(2):
+        if _answer_len(current) <= limit:
+            break
+        text = _llm_compress(current, limit - COMPRESS_MARGIN)
+        if not text:
+            info["steps"].append("llm_error")
+            break
+        check = _verify(text, chunks, question, limit)
         hard = [r for r in check["reasons"] if not r.startswith(LENGTH_REASON)]
-        if (not hard and _answer_len(text) < _answer_len(answer) and _count_items(text) >= items
-                and (TITLE_RE.search(text) or not TITLE_RE.search(answer))):
-            logger.info("回答已压缩：%d 字 → %d 字", _answer_len(answer), _answer_len(text))
-            answer = text
+        kept_nums = len(_numbers(text) & nums) / len(nums) if nums else 1.0
+        if (not hard and _answer_len(text) < _answer_len(current) and _count_items(text) >= items
+                and kept_nums >= 0.8 and (TITLE_RE.search(text) or not TITLE_RE.search(current))):
+            current = text
+            info["steps"].append("llm")
         else:
-            logger.info("压缩结果未采用: hard=%s 条目 %d→%d", hard, items, _count_items(text))
-    if _answer_len(answer) > MAX_ANSWER_CHARS:
-        trimmed = answer.split("**依据**")[0].rstrip()
-        if trimmed:
-            answer = trimmed
-    return answer
+            info["steps"].append("llm_rejected")
+            info["llm_rejected"] = {"hard": hard, "items": [items, _count_items(text)],
+                                    "numbers_kept": round(kept_nums, 2), "len": _answer_len(text)}
+            break
+    if _answer_len(current) > limit:
+        current = _extractive_trim(current, limit - 10)
+        info["steps"].append("extractive")
+    info["to"] = _answer_len(current)
+    logger.info("回答压缩: %s", info)
+    return current, info
 
 
-def _verify(answer: str, chunks: List[Dict[str, Any]], question: str) -> Dict[str, Any]:
+def _verify(answer: str, chunks: List[Dict[str, Any]], question: str,
+            limit: int = MAX_ANSWER_CHARS) -> Dict[str, Any]:
     reasons: List[str] = []
 
     haystack = _squash(question + "".join(
@@ -792,7 +1280,7 @@ def _verify(answer: str, chunks: List[Dict[str, Any]], question: str) -> Dict[st
     if bad_numbers:
         reasons.append("出现片段中没有的数字：" + "、".join(sorted(set(bad_numbers))))
 
-    if _answer_len(answer) > MAX_ANSWER_CHARS:
+    if _answer_len(answer) > limit:
         reasons.append(f"{LENGTH_REASON}（当前约 {_answer_len(answer)} 字）")
 
     has_deprecated = any(c.get("status") == "已废止" for c in chunks)
@@ -809,7 +1297,8 @@ def node_verify(state: AgentState) -> Dict[str, Any]:
 
     answer = _EMPTY_LINE_RE.sub("", answer).strip()
 
-    result = _verify(answer, state.get("chunks") or [], state.get("question") or "")
+    limit = _answer_limit(bool(state.get("list_query")))
+    result = _verify(answer, state.get("chunks") or [], state.get("question") or "", limit)
     retry = int(state.get("retry") or 0)
     if result["ok"]:
         return {"answer": answer, "verify_result": result}
@@ -817,8 +1306,8 @@ def node_verify(state: AgentState) -> Dict[str, Any]:
     hard = [r for r in result["reasons"] if not r.startswith(LENGTH_REASON)]
     if not hard:
         # 只是偏长：内容都有依据。不重新生成（重写一遍长度往往差不多），改为压缩；不加"未核实"提示
-        shorter = _shorten(answer, state.get("chunks") or [], state.get("question") or "")
-        return {"answer": shorter, "verify_result": result, "retry": 2}
+        shorter, info = _shorten(answer, state.get("chunks") or [], state.get("question") or "", limit)
+        return {"answer": shorter, "verify_result": result, "retry": 2, "compress_info": info}
 
     if retry == 0:
         logger.info("verify 未通过，重新生成一次: %s", result["reasons"])
@@ -897,7 +1386,15 @@ def node_format(state: AgentState) -> Dict[str, Any]:
         "sources": sources,
         "rewritten_query": state.get("rewritten_query", ""),
         "intent": state.get("intent", "knowledge"),
+        "version": AGENT_VERSION,
     }
+    comp = state.get("compress_info") or {}
+    if comp.get("steps"):
+        # 评测时能直接看到这条回答被压缩过、走了哪几步（原长 → 现长）
+        payload["compress"] = {"from": comp.get("from"), "to": comp.get("to"), "limit": comp.get("limit"),
+                               "steps": comp["steps"]}
+        if comp.get("llm_rejected"):
+            payload["compress"]["llm_rejected"] = comp["llm_rejected"]  # 模型压缩为什么没被采用
     block = "```json\n" + json.dumps(payload, ensure_ascii=False) + "\n```"
     body = f"{UNVERIFIED_NOTE}\n{answer}" if status == "unverified" and answer else answer
     content = f"{body}\n\n{block}" if body else block
@@ -974,13 +1471,17 @@ def node_log(state: AgentState) -> Dict[str, Any]:
                             "min_score": cfg.get("min_score"),
                             "max_context_chunks": cfg.get("max_context_chunks"),
                             "exclude_status": cfg.get("exclude_status"),
+                            "rerank": _rerank_config(cfg),
+                            "rerank_result": state.get("rerank_info") or {},
+                            "version": AGENT_VERSION,
                         },
                         ensure_ascii=False,
                     ),
                     "ret": json.dumps(retrieved, ensure_ascii=False),
                     "ans": state.get("answer", ""),
                     "st": state.get("status", ""),
-                    "vr": json.dumps(state.get("verify_result") or {}, ensure_ascii=False),
+                    "vr": json.dumps(dict(state.get("verify_result") or {},
+                                          compress=state.get("compress_info") or {}), ensure_ascii=False),
                     "lat": latency,
                 },
             )

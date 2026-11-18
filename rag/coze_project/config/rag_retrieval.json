@@ -1,1 +1,24 @@
-{"datasets": ["qinghe_kb"], "top_k": 6, "min_score": 0.0, "rewrite": true, "exclude_status": ["已废止"], "filter_stale": true, "max_context_chunks": 6, "list_max_context_chunks": 10}
+{
+  "datasets": [
+    "qinghe_kb"
+  ],
+  "top_k": 6,
+  "min_score": 0.0,
+  "rewrite": true,
+  "exclude_status": [
+    "已废止"
+  ],
+  "filter_stale": true,
+  "max_context_chunks": 6,
+  "list_max_context_chunks": 10,
+  "rerank": {
+    "method": "lexical",
+    "candidates": 10,
+    "keep": 6,
+    "min_keep": 3,
+    "relative_cut": 0.8,
+    "section_fill": 1,
+    "lexical_weight": 0.5,
+    "llm_allow_empty": false
+  }
+}
