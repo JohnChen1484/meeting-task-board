@@ -112,3 +112,30 @@ def test_sources_may_use_document_titles():
     old = ('婚假 3 天。\n```json\n{"status": "answered", "sources": [{"file": "员工考勤与休假制度（v1）【已废止】"}]}\n```')
     failed = {c["description"] for c in ev.evaluate_answer(case("V03"), old) if c["passed"] is False}
     assert "出处不含已废止文档" in failed and "出处包含正确文档" in failed
+
+
+def test_report_records_answer_version(tmp_path):
+    class Fake:
+        def __init__(self):
+            self.answers = iter([
+                "**答案**：10 天（《员工考勤与休假制度（v2）》）\n\n```json\n"
+                '{"status": "answered", "sources": [], "version": "w4.1"}\n```',
+                "知识库中未找到相关信息。",
+            ])
+
+        def stream_run(self, q):
+            return type("R", (), {"answer": next(self.answers), "session_id": "s"})()
+
+    cases = [c for c in ev.load_cases(ev.DEFAULT_EVAL_SET) if c["id"] in ("V03", "R01")]
+    results = ev.run_cases(cases, Fake(), sleep_fn=lambda s: None)
+    assert [r["version"] for r in results] == ["w4.1", ""]
+    report = ev.render_report(cases, results, "t")
+    assert "作答版本：w4.1 × 1；未标版本 × 1" in report
+    assert "· w4.1" in report
+
+
+def test_long_answer_eval_set_is_valid():
+    path = ev.ROOT / "rag" / "eval" / "rag_eval_set_long.json"
+    cases = ev.load_cases(path)
+    assert len(cases) == 4 and all(c.get("max_chars") and c.get("gold") for c in cases)
+    assert all("长回答" in c["tags"] for c in cases)

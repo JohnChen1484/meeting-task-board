@@ -169,7 +169,10 @@ def run_cases(cases, client, sleep_fn=None):
         checks = [{"description": "调用成功", "passed": error is None, "kind": "检索失败"}]
         checks.extend(evaluate_answer(case, answer))
         decided = [c for c in checks if c["passed"] is not None]
+        data = split_structured(answer)[1] or {}
+        version = data.get("version") if isinstance(data.get("version"), str) else ""
         results.append({"case": case, "answer": answer, "session_id": session_id, "error": error,
+                        "version": version,
                         "elapsed": time.monotonic() - started, "checks": checks,
                         "length": len(normalize(split_structured(answer)[0])),
                         "passed": all(c["passed"] for c in decided)})
@@ -191,6 +194,9 @@ def render_report(cases, results, label, token=""):
     structured = sum(1 for r in results if any(c["kind"] == "结构化" and c["passed"] is not None for c in r["checks"]))
     lines += [f"总通过率：{rate(passed, len(results))}；平均耗时 {avg_time:.1f} 秒；有答案题平均正文长度 {avg_len:.0f} 字；"
               f"带结构化输出的回答 {structured}/{len(results)}。", ""]
+    versions = Counter(r.get("version") or "未标版本" for r in results)
+    lines += ["作答版本：" + "；".join(f"{esc(v)} × {n}" for v, n in versions.most_common())
+              + "（来自回答 json 的 version 字段，用来确认评测的是哪一版部署）", ""]
 
     def table(title, key_fn):
         nonlocal lines
@@ -224,7 +230,8 @@ def render_report(cases, results, label, token=""):
     lines += ["## 全部回答", ""]
     for r in results:
         c = r["case"]
-        lines += [f"### {esc(c['id'])} · {'通过' if r['passed'] else '失败'} · {r['elapsed']:.1f} 秒 · {r['length']} 字",
+        lines += [f"### {esc(c['id'])} · {'通过' if r['passed'] else '失败'} · {r['elapsed']:.1f} 秒 · {r['length']} 字"
+                  + (f" · {esc(r['version'])}" if r.get("version") else ""),
                   "", f"问题：{esc(c['question'])}", "", "<pre>" + esc(r["answer"]) + "</pre>", ""]
         if r["error"]:
             lines += [f"调用错误：{esc(r['error'])}", ""]

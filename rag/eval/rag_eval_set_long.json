@@ -1,0 +1,74 @@
+{
+  "knowledge_base": "青禾数智科技（虚构）",
+  "version": "long-1.0",
+  "note": "长回答专项：4 道需要列举多条内容的宽泛问题，检查压缩后是否不超长、要点不丢。与 62 题分开，避免为 L02 单题调参。用法：python3 scripts/eval_rag_v2.py --live --eval-set rag/eval/rag_eval_set_long.json --label long",
+  "items": [
+    {
+      "id": "LA1",
+      "category": "宽泛问题",
+      "question": "新员工入职都要做哪些事？",
+      "reference_answer": "第一天 9:00 到前台报到，带身份证、学历证书、离职证明和银行卡；领工牌电脑、开账号；见入职伙伴；入职后 7/14/30 天内完成三门必修培训",
+      "must_include": [["身份证"], ["信息安全"], ["报到"]],
+      "must_not_include": [],
+      "sources": ["07_新员工入职指南.md"],
+      "should_refuse": false,
+      "tags": ["宽泛问题", "长回答"],
+      "expected_status": "answered",
+      "gold": [
+        {"file": "07_新员工入职指南.md", "any": ["身份证原件"]},
+        {"file": "07_新员工入职指南.md", "any": ["信息安全培训"]}
+      ],
+      "max_chars": 450
+    },
+    {
+      "id": "LA2",
+      "category": "宽泛问题",
+      "question": "公司的信息安全规定主要有哪些？",
+      "reference_answer": "密码不少于 12 位、90 天更换；邮箱和代码库开 MFA；客户数据至少按机密管理、不得通过个人渠道外发；只能用批准的 AI 工具；U 盘默认禁用；设备丢失 2 小时内报告",
+      "must_include": [["12"], ["机密"], ["AI"]],
+      "must_not_include": [],
+      "sources": ["06_信息安全与IT使用规范.md"],
+      "should_refuse": false,
+      "tags": ["宽泛问题", "长回答"],
+      "expected_status": "answered",
+      "gold": [
+        {"file": "06_信息安全与IT使用规范.md", "any": ["不少于12位"]},
+        {"file": "06_信息安全与IT使用规范.md", "any": ["至少按\"机密\"级别管理"]}
+      ],
+      "max_chars": 450
+    },
+    {
+      "id": "LA3",
+      "category": "宽泛问题",
+      "question": "公司采购有哪些规定？",
+      "reference_answer": "按金额分档：低于 5000 元部门负责人审批；5000 至 5 万元三家比价并经财务部审核；5 万元以上招标并经总经理审批；IT 设备须信息技术部确认配置；严禁拆单；验收合格后 30 个自然日内付款",
+      "must_include": [["5000"], ["三家", "3家"], ["拆分", "拆单"]],
+      "must_not_include": [],
+      "sources": ["05_采购管理规定.md"],
+      "should_refuse": false,
+      "tags": ["宽泛问题", "长回答"],
+      "expected_status": "answered",
+      "gold": [
+        {"file": "05_采购管理规定.md", "any": ["三家供应商报价"]},
+        {"file": "05_采购管理规定.md", "any": ["拆分为多笔"]}
+      ],
+      "max_chars": 450
+    },
+    {
+      "id": "LA4",
+      "category": "表格数值",
+      "question": "客服工单各个优先级的首次响应时限分别是多少？",
+      "reference_answer": "P1 15 分钟、P2 1 小时、P3 4 小时、P4 1 个工作日",
+      "must_include": [["15分钟", "十五分钟"], ["1小时", "一小时"], ["4小时", "四小时"], ["1个工作日", "一个工作日"]],
+      "must_not_include": [],
+      "sources": ["10_客户服务SLA与工单流程.md"],
+      "should_refuse": false,
+      "tags": ["表格数值", "长回答"],
+      "expected_status": "answered",
+      "gold": [
+        {"file": "10_客户服务SLA与工单流程.md", "any": ["首次响应时限"]}
+      ],
+      "max_chars": 400
+    }
+  ]
+}
